@@ -1,0 +1,870 @@
+<!doctype html>
+<html lang="cs" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>WorkPark — Řemeslnický park nové generace | powered by ModuBox</title>
+  <meta name="description" content="Nepronajímáme sklady. Dáváme řemeslníkům základnu: sklad + dílna + auto + zázemí. Chytré vstupy, bezpečí, modulární růst." />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          boxShadow: {
+            soft: '0 16px 60px rgba(0,0,0,.10)',
+            deep: '0 28px 90px rgba(0,0,0,.28)',
+            glow: '0 0 0 1px rgba(255,255,255,.10), 0 26px 90px rgba(0,0,0,.35)',
+          },
+          borderRadius: {
+            xl2: '1.25rem'
+          },
+          keyframes: {
+            floaty: {
+              '0%, 100%': { transform: 'translateY(0px)' },
+              '50%': { transform: 'translateY(-8px)' }
+            },
+            shimmer: {
+              '0%': { backgroundPosition: '0% 50%' },
+              '100%': { backgroundPosition: '100% 50%' }
+            },
+            pulseRing: {
+              '0%': { transform: 'scale(.9)', opacity: '.55' },
+              '60%': { transform: 'scale(1.25)', opacity: '0' },
+              '100%': { transform: 'scale(1.25)', opacity: '0' },
+            }
+          },
+          animation: {
+            floaty: 'floaty 6s ease-in-out infinite',
+            shimmer: 'shimmer 9s ease-in-out infinite',
+            pulseRing: 'pulseRing 2.2s ease-out infinite'
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Jemné zrno pro „profi“ look */
+    .grain::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="220" height="220" filter="url(%23n)" opacity="0.14"/></svg>');
+      mix-blend-mode: overlay;
+      opacity:.55;
+    }
+    /* Skleněný panel */
+    .glass{ backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+    /* Plynulý posun pozadí */
+    .bg-mesh{
+      background-size: 240% 240%;
+      animation: shimmer 12s ease-in-out infinite;
+    }
+    /* Hezký focus */
+    :focus-visible{ outline: 2px solid rgba(250,204,21,.75); outline-offset: 3px; }
+  </style>
+</head>
+
+<body class="h-full bg-zinc-950 text-zinc-100 selection:bg-yellow-300/30 selection:text-yellow-200">
+
+  <!-- Background layer (mesh + grain) -->
+  <div class="fixed inset-0 -z-10">
+    <div class="absolute inset-0 bg-mesh" id="mesh"></div>
+    <div class="absolute inset-0 grain"></div>
+    <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-black/45 to-black"></div>
+  </div>
+
+  <!-- Optional video background (zapneš vložením src; jinak je schované) -->
+  <video id="bgVideo" class="fixed inset-0 -z-20 h-full w-full object-cover hidden" autoplay muted loop playsinline></video>
+
+  <!-- Top bar -->
+  <header class="sticky top-0 z-40 border-b border-white/10 bg-zinc-950/65 glass">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6">
+      <div class="flex h-16 items-center justify-between gap-3">
+        <a href="#top" class="group inline-flex items-center gap-3">
+          <img src="https://raw.githubusercontent.com/michalsurmanek-sketch/adresao.cz/main/workpark.png" alt="WorkPark.cz" class="h-14 sm:h-16 lg:h-24 xl:h-28 w-auto" />
+          
+        </a>
+
+        <nav class="hidden md:flex items-center gap-6 text-sm text-zinc-300">
+          <a class="hover:text-white" href="#moduly">Moduly</a>
+          <a class="hover:text-white" href="#cenik">Ceník</a>
+          <a class="hover:text-white" href="#lokality">Lokality</a>
+          <a class="hover:text-white" href="#jak">Jak to funguje</a>
+          <a class="hover:text-white" href="#faq">FAQ</a>
+        </nav>
+
+        <div class="flex items-center gap-2">
+          <button id="themeBtn" class="inline-flex items-center gap-2 rounded-xl2 border border-white/10 bg-white/5 px-3 py-2 text-sm text-zinc-200 hover:bg-white/10">
+            <span class="inline-block h-2 w-2 rounded-full bg-yellow-400"></span>
+            <span id="themeLabel">Tmavý režim</span>
+          </button>
+
+          <a href="#kontakt" class="hidden sm:inline-flex items-center justify-center rounded-xl2 bg-yellow-400 px-4 py-2 text-sm font-semibold text-zinc-950 hover:bg-yellow-300">
+            Chci box
+          </a>
+
+          <button id="menuBtn" class="md:hidden inline-flex items-center justify-center rounded-xl2 border border-white/10 bg-white/5 p-2 hover:bg-white/10" aria-label="Otevřít menu">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="hidden md:hidden border-t border-white/10">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 py-3 text-sm text-zinc-300 grid gap-2">
+        <a class="rounded-xl2 px-3 py-2 hover:bg-white/5" href="#moduly">Moduly</a>
+        <a class="rounded-xl2 px-3 py-2 hover:bg-white/5" href="#cenik">Ceník</a>
+        <a class="rounded-xl2 px-3 py-2 hover:bg-white/5" href="#lokality">Lokality</a>
+        <a class="rounded-xl2 px-3 py-2 hover:bg-white/5" href="#jak">Jak to funguje</a>
+        <a class="rounded-xl2 px-3 py-2 hover:bg-white/5" href="#faq">FAQ</a>
+        <a class="mt-2 inline-flex items-center justify-center rounded-xl2 bg-yellow-400 px-4 py-2 font-semibold text-zinc-950 hover:bg-yellow-300" href="#kontakt">Chci box</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top" class="mx-auto max-w-7xl px-4 sm:px-6">
+    <section class="relative py-10 sm:py-16">
+      <div class="grid gap-10 lg:grid-cols-12 lg:items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-zinc-300">
+            <span class="relative inline-flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-pulseRing rounded-full bg-yellow-400"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-yellow-400"></span>
+            </span>
+            Bezpečný sklad • mini dílna • stání pro dodávku
+          </div>
+
+          <h1 class="mt-5 text-4xl font-black tracking-tight sm:text-5xl">
+            WorkPark.
+            <span class="block bg-gradient-to-r from-yellow-300 via-yellow-200 to-white bg-clip-text text-transparent">Řemeslnický park nové generace.</span>
+          </h1>
+
+          <p class="mt-4 text-lg text-zinc-300 max-w-2xl">
+            WorkPark je modulární řemeslnický areál: <b>sklady, dílny, parkování a zázemí</b> na jednom místě.
+            Celý park je postavený na modulárním systému <b>ModuBox</b>.
+          </p>
+
+          <div class="mt-7 flex flex-col sm:flex-row gap-3">
+            <a href="#cenik" class="inline-flex items-center justify-center rounded-xl2 bg-yellow-400 px-5 py-3 font-semibold text-zinc-950 hover:bg-yellow-300">
+              Zobrazit ceník
+            </a>
+            <a href="#kalkulacka" class="inline-flex items-center justify-center rounded-xl2 border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white hover:bg-white/10">
+              Spočítat ideální box
+            </a>
+          </div>
+
+          <div class="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4">
+            <div class="rounded-xl2 border border-white/10 bg-white/5 p-4">
+              <div class="text-2xl font-extrabold">24/7</div>
+              <div class="text-xs text-zinc-400">vstup mobilem</div>
+            </div>
+            <div class="rounded-xl2 border border-white/10 bg-white/5 p-4">
+              <div class="text-2xl font-extrabold">+ modul</div>
+              <div class="text-xs text-zinc-400">růst bez stěhování</div>
+            </div>
+            <div class="rounded-xl2 border border-white/10 bg-white/5 p-4">
+              <div class="text-2xl font-extrabold">bezpečí</div>
+              <div class="text-xs text-zinc-400">kamery, zámky, logy</div>
+            </div>
+            <div class="rounded-xl2 border border-white/10 bg-white/5 p-4">
+              <div class="text-2xl font-extrabold">zázemí</div>
+              <div class="text-xs text-zinc-400">WC, sprcha, káva</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right visual card -->
+        <div class="lg:col-span-5">
+          <div class="relative rounded-3xl border border-white/10 bg-white/5 p-6 shadow-deep">
+            <div class="absolute -top-6 -right-6 h-28 w-28 rounded-full bg-yellow-400/25 blur-2xl"></div>
+            <div class="absolute -bottom-8 -left-8 h-28 w-28 rounded-full bg-white/10 blur-2xl"></div>
+
+            <div class="flex items-center justify-between">
+              <div>
+                <div class="text-sm text-zinc-400">Doporučená sestava</div>
+                <div class="text-xl font-bold">Sklad + MiniDílna + Park</div>
+              </div>
+              <span class="rounded-full border border-yellow-400/30 bg-yellow-400/10 px-3 py-1 text-xs text-yellow-200">TOP pro řemeslo</span>
+            </div>
+
+            <div class="mt-5 grid gap-3">
+              <div class="rounded-xl2 border border-white/10 bg-zinc-950/40 p-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <div class="font-semibold">Modul A — Sklad</div>
+                    <div class="text-sm text-zinc-400">10–30 m² • regály • temperace</div>
+                  </div>
+                  <div class="text-sm font-semibold text-yellow-200">od 2 990 Kč</div>
+                </div>
+              </div>
+              <div class="rounded-xl2 border border-white/10 bg-zinc-950/40 p-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <div class="font-semibold">Modul B — Dílna</div>
+                    <div class="text-sm text-zinc-400">světla • zásuvky • větrání</div>
+                  </div>
+                  <div class="text-sm font-semibold text-yellow-200">od 3 490 Kč</div>
+                </div>
+              </div>
+              <div class="rounded-xl2 border border-white/10 bg-zinc-950/40 p-4">
+                <div class="flex items-start justify-between gap-3">
+                  <div>
+                    <div class="font-semibold">Modul C — Park/Garáž</div>
+                    <div class="text-sm text-zinc-400">dodávka přímo u boxu</div>
+                  </div>
+                  <div class="text-sm font-semibold text-yellow-200">od 690 Kč</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-6 flex flex-col sm:flex-row gap-3">
+              <button id="openLead" class="inline-flex flex-1 items-center justify-center rounded-xl2 bg-yellow-400 px-4 py-3 font-semibold text-zinc-950 hover:bg-yellow-300">
+                Nezávazně poptat
+              </button>
+              <button id="toggleVideo" class="inline-flex items-center justify-center rounded-xl2 border border-white/10 bg-white/5 px-4 py-3 font-semibold text-white hover:bg-white/10">
+                Zapnout video pozadí
+              </button>
+            </div>
+
+            <p class="mt-3 text-xs text-zinc-400">
+              Video pozadí je volitelné — stačí v kódu doplnit URL do elementu <code class="text-zinc-200">#bgVideo</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Social proof strip -->
+    <section class="py-6">
+      <div class="rounded-3xl border border-white/10 bg-white/5 p-6 glass">
+        <div class="grid gap-4 md:grid-cols-3">
+          <div>
+            <div class="text-sm text-zinc-400">Pro koho je WorkPark</div>
+            <div class="mt-1 text-lg font-semibold">truhláři • elektrikáři • instalatéři • stavební firmy • e‑shopy</div>
+          </div>
+          <div>
+            <div class="text-sm text-zinc-400">Proč lidi přechází</div>
+            <div class="mt-1 text-lg font-semibold">už žádné tahání nářadí po bytě, žádné krádeže, žádné „nemám kam dát materiál“</div>
+          </div>
+          <div>
+            <div class="text-sm text-zinc-400">Co je navíc</div>
+            <div class="mt-1 text-lg font-semibold">zázemí, sdílené vybavení, rychlé rozšíření, přístup 24/7</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Modules -->
+    <section id="moduly" class="py-12 sm:py-16">
+      <div class="flex items-end justify-between gap-6">
+        <div>
+          <h2 class="text-3xl font-black tracking-tight">Moduly, které si složíš jako LEGO</h2>
+          <p class="mt-2 text-zinc-300 max-w-2xl">Začni malým. Až porosteš, nepřestěhuješ se — jen přidáš modul vedle. Všechno sedí na jeden systém.</p>
+        </div>
+        <a href="#kontakt" class="hidden sm:inline-flex items-center gap-2 text-sm font-semibold text-yellow-200 hover:text-yellow-100">
+          Chci návrh sestavy
+          <span aria-hidden="true">→</span>
+        </a>
+      </div>
+
+      <div class="mt-8 grid gap-4 lg:grid-cols-3">
+        <article class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft hover:shadow-glow transition">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold">Modul A — Sklad</h3>
+            <span class="rounded-full bg-yellow-400/10 text-yellow-200 border border-yellow-400/25 px-3 py-1 text-xs">nejžádanější</span>
+          </div>
+          <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+            <li>• 10 / 15 / 30 m²</li>
+            <li>• vysoký strop pro regály</li>
+            <li>• elektřina + měření</li>
+            <li>• možnost temperace</li>
+          </ul>
+          <div class="mt-6 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-zinc-400">od</div>
+              <div class="text-2xl font-extrabold">2 990 Kč</div>
+            </div>
+            <button class="pick rounded-xl2 border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold hover:bg-white/10" data-pick="A">Vybrat</button>
+          </div>
+        </article>
+
+        <article class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft hover:shadow-glow transition">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold">Modul B — Dílna</h3>
+            <span class="rounded-full bg-white/5 text-zinc-200 border border-white/10 px-3 py-1 text-xs">pro práci</span>
+          </div>
+          <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+            <li>• silná světla + zásuvky</li>
+            <li>• větrání / odsávání (volit.)</li>
+            <li>• příprava zakázek, balení</li>
+            <li>• možnost hlučnější zóny</li>
+          </ul>
+          <div class="mt-6 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-zinc-400">od</div>
+              <div class="text-2xl font-extrabold">3 490 Kč</div>
+            </div>
+            <button class="pick rounded-xl2 border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold hover:bg-white/10" data-pick="B">Vybrat</button>
+          </div>
+        </article>
+
+        <article class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft hover:shadow-glow transition">
+          <div class="flex items-center justify-between">
+            <h3 class="text-lg font-bold">Modul C — Park/Garáž</h3>
+            <span class="rounded-full bg-white/5 text-zinc-200 border border-white/10 px-3 py-1 text-xs">dodávka u boxu</span>
+          </div>
+          <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+            <li>• stání přímo před modulem</li>
+            <li>• uzamykatelná garáž (volit.)</li>
+            <li>• nabíjení aku / e‑auto (volit.)</li>
+            <li>• rychlé nakládání materiálu</li>
+          </ul>
+          <div class="mt-6 flex items-center justify-between">
+            <div>
+              <div class="text-xs text-zinc-400">od</div>
+              <div class="text-2xl font-extrabold">690 Kč</div>
+            </div>
+            <button class="pick rounded-xl2 border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold hover:bg-white/10" data-pick="C">Vybrat</button>
+          </div>
+        </article>
+      </div>
+
+      <!-- Add-ons -->
+      <div class="mt-6 grid gap-4 lg:grid-cols-2">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h3 class="text-lg font-bold">Zázemí (společné)</h3>
+          <p class="mt-2 text-sm text-zinc-300">WC, sprcha, káva, skříňky, mini zasedačka. V praxi tohle dělá největší rozdíl — šetří čas i nervy.</p>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs">
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">WC</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">sprcha</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">káva</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">zasedačka</span>
+          </div>
+        </div>
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <h3 class="text-lg font-bold">Bezpečnost & chytré vstupy</h3>
+          <p class="mt-2 text-sm text-zinc-300">Kamera, log přístupů, možnost upozornění. Vstup mobilem, kódem nebo čipem. Nastavíš zaměstnance a jejich oprávnění.</p>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs">
+            <span class="rounded-full border border-yellow-400/25 bg-yellow-400/10 px-3 py-1 text-yellow-200">kamery</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">logy</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">notifikace</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">přístupy</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calculator -->
+    <section id="kalkulacka" class="py-12 sm:py-16">
+      <div class="rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-8 shadow-soft">
+        <div class="grid gap-8 lg:grid-cols-12 lg:items-start">
+          <div class="lg:col-span-5">
+            <h2 class="text-3xl font-black tracking-tight">Kalkulačka: ideální sestava za 30 sekund</h2>
+            <p class="mt-2 text-zinc-300">Vybereš obor, množství materiálu a jestli chceš dílnu. Web ti doporučí moduly a přibližnou cenu.</p>
+
+            <div class="mt-6 space-y-4">
+              <label class="block">
+                <span class="text-sm text-zinc-300">Obor</span>
+                <select id="job" class="mt-2 w-full rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3 text-white">
+                  <option value="light">Elektrikář / servis / montáže</option>
+                  <option value="medium">Instalatér / stavební práce</option>
+                  <option value="heavy">Truhlář / výroba / sklad e‑shop</option>
+                </select>
+              </label>
+
+              <label class="block">
+                <span class="text-sm text-zinc-300">Kolik věcí máš (odhad)</span>
+                <input id="stuff" type="range" min="1" max="10" value="5" class="mt-2 w-full" />
+                <div class="mt-1 text-xs text-zinc-400">malo <span class="mx-2">•</span> střed <span class="mx-2">•</span> hodně</div>
+              </label>
+
+              <label class="flex items-center justify-between gap-3 rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3">
+                <div>
+                  <div class="text-sm font-semibold">Chci i dílnu</div>
+                  <div class="text-xs text-zinc-400">pracovní stůl, světla, zásuvky</div>
+                </div>
+                <input id="wantWorkshop" type="checkbox" class="h-5 w-5 accent-yellow-400" />
+              </label>
+
+              <label class="flex items-center justify-between gap-3 rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3">
+                <div>
+                  <div class="text-sm font-semibold">Chci stání pro dodávku</div>
+                  <div class="text-xs text-zinc-400">přímo u boxu</div>
+                </div>
+                <input id="wantPark" type="checkbox" class="h-5 w-5 accent-yellow-400" checked />
+              </label>
+
+              <button id="calcBtn" class="w-full rounded-xl2 bg-yellow-400 px-5 py-3 font-semibold text-zinc-950 hover:bg-yellow-300">Spočítat</button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-7">
+            <div class="rounded-3xl border border-white/10 bg-zinc-950/35 p-6 sm:p-8">
+              <div class="flex items-center justify-between">
+                <div>
+                  <div class="text-sm text-zinc-400">Doporučený balíček</div>
+                  <div id="packTitle" class="mt-1 text-2xl font-extrabold">Start</div>
+                </div>
+                <div class="text-right">
+                  <div class="text-sm text-zinc-400">Odhad měsíčně</div>
+                  <div id="packPrice" class="mt-1 text-2xl font-extrabold text-yellow-200">—</div>
+                </div>
+              </div>
+
+              <div id="packModules" class="mt-6 grid gap-3 sm:grid-cols-2">
+                <!-- filled by JS -->
+              </div>
+
+              <div class="mt-6 rounded-xl2 border border-white/10 bg-white/5 p-4">
+                <div class="text-sm font-semibold">Pro tip</div>
+                <p id="packTip" class="mt-1 text-sm text-zinc-300">Vybereš malý sklad a až budeš mít víc zakázek, jen přidáš další modul vedle.</p>
+              </div>
+
+              <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                <a href="#kontakt" id="ctaFromCalc" class="inline-flex flex-1 items-center justify-center rounded-xl2 bg-yellow-400 px-5 py-3 font-semibold text-zinc-950 hover:bg-yellow-300">Poptat tento balíček</a>
+                <button id="copyPack" class="inline-flex items-center justify-center rounded-xl2 border border-white/10 bg-white/5 px-5 py-3 font-semibold text-white hover:bg-white/10">Zkopírovat sestavu</button>
+              </div>
+              <div id="copyToast" class="mt-3 hidden text-sm text-yellow-200">Zkopírováno do schránky ✅</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="cenik" class="py-12 sm:py-16">
+      <div class="flex items-end justify-between gap-6">
+        <div>
+          <h2 class="text-3xl font-black tracking-tight">Ceník, který je fér a čitelný</h2>
+          <p class="mt-2 text-zinc-300 max-w-2xl">Bez háčků. Platíš za moduly a doplňky. Kdykoli můžeš přidat/ubrat.</p>
+        </div>
+        <div class="hidden sm:flex items-center gap-2 text-xs text-zinc-400">
+          <span class="h-2 w-2 rounded-full bg-yellow-400"></span>
+          Ceny jsou ukázkové — upravíš podle lokality
+        </div>
+      </div>
+
+      <div class="mt-8 grid gap-4 lg:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+          <div class="text-sm text-zinc-400">Start</div>
+          <div class="mt-1 text-2xl font-extrabold">Sklad 10 m²</div>
+          <div class="mt-4 text-4xl font-black">2 990<span class="text-base font-semibold text-zinc-300"> Kč/měs</span></div>
+          <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+            <li>• přístup 24/7</li>
+            <li>• kamera v zóně</li>
+            <li>• elektřina (měřená)</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex w-full items-center justify-center rounded-xl2 bg-white/10 px-4 py-3 font-semibold hover:bg-white/15">Chci Start</a>
+        </div>
+
+        <div class="rounded-3xl border border-yellow-400/30 bg-gradient-to-b from-yellow-400/12 via-white/5 to-white/5 p-6 shadow-deep">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-yellow-200">Nejlepší</div>
+            <span class="rounded-full bg-yellow-400 px-3 py-1 text-xs font-bold text-zinc-950">TOP</span>
+          </div>
+          <div class="mt-1 text-2xl font-extrabold">Sklad 15 m² + Dílna</div>
+          <div class="mt-4 text-4xl font-black">6 490<span class="text-base font-semibold text-zinc-300"> Kč/měs</span></div>
+          <ul class="mt-4 space-y-2 text-sm text-zinc-200">
+            <li>• světla + zásuvky v dílně</li>
+            <li>• možnost hlučné zóny</li>
+            <li>• 1× parkování pro dodávku</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex w-full items-center justify-center rounded-xl2 bg-yellow-400 px-4 py-3 font-semibold text-zinc-950 hover:bg-yellow-300">Chci TOP</a>
+        </div>
+
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6 shadow-soft">
+          <div class="text-sm text-zinc-400">Pro</div>
+          <div class="mt-1 text-2xl font-extrabold">2× modul + zázemí</div>
+          <div class="mt-4 text-4xl font-black">9 990<span class="text-base font-semibold text-zinc-300"> Kč/měs</span></div>
+          <ul class="mt-4 space-y-2 text-sm text-zinc-300">
+            <li>• 2× sklad nebo sklad + dílna</li>
+            <li>• vyšší výkon elektřiny (volit.)</li>
+            <li>• priorita na rozšíření</li>
+          </ul>
+          <a href="#kontakt" class="mt-6 inline-flex w-full items-center justify-center rounded-xl2 bg-white/10 px-4 py-3 font-semibold hover:bg-white/15">Chci Pro</a>
+        </div>
+      </div>
+
+      <div class="mt-6 grid gap-4 lg:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="font-bold">Doplňky</div>
+          <div class="mt-3 grid gap-2 text-sm text-zinc-300">
+            <div class="flex items-center justify-between"><span>Temperace</span><span class="text-yellow-200">+ 390 Kč</span></div>
+            <div class="flex items-center justify-between"><span>Garáž</span><span class="text-yellow-200">+ 990 Kč</span></div>
+            <div class="flex items-center justify-between"><span>Notifikace přístupů</span><span class="text-yellow-200">+ 90 Kč</span></div>
+          </div>
+        </div>
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6 lg:col-span-2">
+          <div class="font-bold">Proč to vyjde levněji než „někde něco“</div>
+          <p class="mt-2 text-sm text-zinc-300">Získáš sklad + dílnu + parkování + bezpečnost v jednom. Bez investice do vlastních prostor, bez stěhování, bez nervů.</p>
+          <div class="mt-4 flex flex-wrap gap-2 text-xs text-zinc-300">
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">rychlejší start</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">bez krádeží</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">jedna faktura</span>
+            <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1">škálování</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Locations -->
+    <section id="lokality" class="py-12 sm:py-16">
+      <h2 class="text-3xl font-black tracking-tight">WorkPark lokality</h2>
+      <p class="mt-1 text-sm text-zinc-400">Každá lokalita má vlastní stránku: WorkPark Brno, WorkPark Zlín, WorkPark Praha…</p>
+      <div class="mt-4 flex flex-wrap gap-2">
+        <span class="rounded-full border border-yellow-400/30 bg-yellow-400/10 px-3 py-1 text-xs text-yellow-200">WorkPark Brno</span>
+        <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs">WorkPark Praha</span>
+        <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs">WorkPark Zlín</span>
+        <span class="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs">WorkPark Ostrava</span>
+      </div>
+      <p class="mt-2 text-zinc-300 max-w-2xl">Hledáme nové pozemky pro pobočky. Ideálně u měst, s dobrým nájezdem pro dodávky.</p>
+
+      <div class="mt-8 grid gap-4 lg:grid-cols-12">
+        <div class="lg:col-span-7 rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="flex items-center justify-between">
+            <div class="font-bold">Mapa (ukázka)</div>
+            <div class="text-xs text-zinc-400">Sem napojíš Mapbox / Google Maps</div>
+          </div>
+          <div class="mt-4 h-72 rounded-2xl bg-zinc-950/40 border border-white/10 grid place-items-center text-zinc-400">
+            <div class="text-center">
+              <div class="text-sm">MAPA</div>
+              <div class="text-xs">(placeholder)</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="lg:col-span-5 grid gap-4">
+          <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div class="font-bold">Chci nabídnout pozemek</div>
+            <p class="mt-2 text-sm text-zinc-300">Máš pozemek u města? Pošli lokaci a fotky. Ozveme se rychle.</p>
+            <a href="#kontakt" class="mt-4 inline-flex items-center justify-center rounded-xl2 bg-yellow-400 px-4 py-3 font-semibold text-zinc-950 hover:bg-yellow-300">Nabídnout pozemek</a>
+          </div>
+          <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+            <div class="font-bold">Co hledáme</div>
+            <ul class="mt-3 space-y-2 text-sm text-zinc-300">
+              <li>• min. 1 500–3 000 m²</li>
+              <li>• dobrý nájezd / viditelnost</li>
+              <li>• možnost rozšíření</li>
+              <li>• elektřina (ideál: 3f)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How it works -->
+    <section id="jak" class="py-12 sm:py-16">
+      <h2 class="text-3xl font-black tracking-tight">Jak to funguje</h2>
+      <div class="mt-8 grid gap-4 lg:grid-cols-3">
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="text-xs text-zinc-400">01</div>
+          <div class="mt-2 text-lg font-bold">Vybereš sestavu</div>
+          <p class="mt-2 text-sm text-zinc-300">Sklad / dílna / park. Začni malým a přidej, až budeš chtít.</p>
+        </div>
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="text-xs text-zinc-400">02</div>
+          <div class="mt-2 text-lg font-bold">Podepíšeš online</div>
+          <p class="mt-2 text-sm text-zinc-300">Smlouva, přístupy, faktury. Vše jasně a rychle.</p>
+        </div>
+        <div class="rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="text-xs text-zinc-400">03</div>
+          <div class="mt-2 text-lg font-bold">Vstup 24/7</div>
+          <p class="mt-2 text-sm text-zinc-300">Mobil / kód / čip. Bezpečnost a logy přístupů v ceně.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="py-12 sm:py-16">
+      <h2 class="text-3xl font-black tracking-tight">FAQ</h2>
+      <div class="mt-6 grid gap-3">
+        <details class="rounded-3xl border border-white/10 bg-white/5 p-5">
+          <summary class="cursor-pointer font-semibold">Můžu v boxu i pracovat?</summary>
+          <p class="mt-2 text-sm text-zinc-300">Ano — právě proto existuje Modul B (Dílna). U skladových modulů je to dle pravidel lokality.</p>
+        </details>
+        <details class="rounded-3xl border border-white/10 bg-white/5 p-5">
+          <summary class="cursor-pointer font-semibold">Jak je řešená bezpečnost?</summary>
+          <p class="mt-2 text-sm text-zinc-300">Kamery v zónách, kvalitní zámky, log přístupů. Případně alarm a notifikace jako doplněk.</p>
+        </details>
+        <details class="rounded-3xl border border-white/10 bg-white/5 p-5">
+          <summary class="cursor-pointer font-semibold">Když porostu, musím se stěhovat?</summary>
+          <p class="mt-2 text-sm text-zinc-300">Ne. Přidáš další modul vedle. To je celé kouzlo WorkBoxu.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="kontakt" class="pb-16">
+      <div class="rounded-3xl border border-white/10 bg-white/5 p-6 sm:p-8 shadow-soft">
+        <div class="grid gap-8 lg:grid-cols-12 lg:items-start">
+          <div class="lg:col-span-5">
+            <h2 class="text-3xl font-black tracking-tight">Poptávka / pozemek / spolupráce</h2>
+            <p class="mt-2 text-zinc-300">Vyplň krátký formulář. Ozveme se a navrhneme nejlepší sestavu. (Ukázka — napojíš na e‑mail / CRM.)</p>
+            <div class="mt-6 rounded-3xl border border-white/10 bg-zinc-950/35 p-5">
+              <div class="text-sm font-semibold">Rychlý kontakt</div>
+              <div class="mt-2 text-sm text-zinc-300">E‑mail: <span class="text-yellow-200">info@modubox.cz</span></div>
+              <div class="text-sm text-zinc-300">Telefon: <span class="text-yellow-200">+420 000 000 000</span></div>
+              <div class="mt-3 text-xs text-zinc-400">(vyměň za reálné kontakty)</div>
+            </div>
+          </div>
+
+          <form class="lg:col-span-7 grid gap-3" onsubmit="event.preventDefault(); openModal('Díky! Ozveme se co nejdřív.');">
+            <div class="grid gap-3 sm:grid-cols-2">
+              <input class="rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3 text-white" placeholder="Jméno" required />
+              <input class="rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3 text-white" placeholder="Telefon" required />
+            </div>
+            <input type="email" class="rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3 text-white" placeholder="E‑mail" required />
+            <div class="grid gap-3 sm:grid-cols-2">
+              <select class="rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3 text-white">
+                <option>Chci box</option>
+                <option>Nabízím pozemek</option>
+                <option>Chci spolupráci</option>
+              </select>
+              <select class="rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3 text-white">
+                <option>Oblast / město</option>
+                <option>Brno</option>
+                <option>Praha</option>
+                <option>Zlín</option>
+                <option>Ostrava</option>
+              </select>
+            </div>
+            <textarea class="min-h-[120px] rounded-xl2 border border-white/10 bg-zinc-950/40 px-3 py-3 text-white" placeholder="Co potřebuješ? (např. sklad 15 m² + dílna + park)" required></textarea>
+            <button class="mt-2 rounded-xl2 bg-yellow-400 px-5 py-3 font-semibold text-zinc-950 hover:bg-yellow-300">Odeslat</button>
+            <p class="text-xs text-zinc-400">Odesláním souhlasíš se zpracováním údajů za účelem kontaktu (ukázkový text).</p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="pb-10 text-center text-xs text-zinc-500">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6">
+        <div class="border-t border-white/10 pt-6">© <span id="year"></span> WorkPark — powered by ModuBox. Ukázková stránka.</div>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Lead modal -->
+  <div id="modal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div class="absolute inset-0 bg-black/70" onclick="closeModal()"></div>
+    <div class="relative w-full max-w-lg rounded-3xl border border-white/10 bg-zinc-950/85 glass p-6 shadow-deep">
+      <div class="flex items-start justify-between gap-4">
+        <div>
+          <div class="text-lg font-bold">Hotovo</div>
+          <p id="modalText" class="mt-1 text-sm text-zinc-300">—</p>
+        </div>
+        <button class="rounded-xl2 border border-white/10 bg-white/5 p-2 hover:bg-white/10" onclick="closeModal()" aria-label="Zavřít">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke="currentColor" class="h-5 w-5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+          </svg>
+        </button>
+      </div>
+      <div class="mt-5 flex flex-col sm:flex-row gap-3">
+        <a href="#kontakt" class="inline-flex flex-1 items-center justify-center rounded-xl2 bg-yellow-400 px-4 py-3 font-semibold text-zinc-950 hover:bg-yellow-300" onclick="closeModal()">Jdu na formulář</a>
+        <button class="inline-flex items-center justify-center rounded-xl2 border border-white/10 bg-white/5 px-4 py-3 font-semibold hover:bg-white/10" onclick="closeModal()">Zavřít</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ===== Theme (dark/light) =====
+    const root = document.documentElement;
+    const themeBtn = document.getElementById('themeBtn');
+    const themeLabel = document.getElementById('themeLabel');
+
+    function applyTheme(mode){
+      const isLight = mode === 'light';
+      root.classList.toggle('dark', !isLight);
+      // Přepíš základní barvy pro světlý režim tak, aby bylo vše čitelné
+      if(isLight){
+        document.body.className = 'h-full bg-zinc-50 text-zinc-950 selection:bg-yellow-300/40 selection:text-zinc-950';
+        themeLabel.textContent = 'Světlý režim';
+      } else {
+        document.body.className = 'h-full bg-zinc-950 text-zinc-100 selection:bg-yellow-300/30 selection:text-yellow-200';
+        themeLabel.textContent = 'Tmavý režim';
+      }
+      localStorage.setItem('wb_theme', mode);
+      updateMesh();
+    }
+
+    themeBtn.addEventListener('click', () => {
+      const current = localStorage.getItem('wb_theme') || 'dark';
+      applyTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // ===== Mobile menu =====
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+
+    // ===== Mesh background =====
+    const mesh = document.getElementById('mesh');
+    function updateMesh(){
+      const isLight = (localStorage.getItem('wb_theme') || 'dark') === 'light';
+      mesh.style.backgroundImage = isLight
+        ? 'radial-gradient(1200px 700px at 20% 0%, rgba(250,204,21,.35), transparent 55%), radial-gradient(900px 600px at 80% 20%, rgba(0,0,0,.06), transparent 55%), radial-gradient(900px 800px at 50% 90%, rgba(250,204,21,.18), transparent 55%), linear-gradient(135deg, rgba(255,255,255,.75), rgba(250,250,250,.9))'
+        : 'radial-gradient(1200px 700px at 20% 0%, rgba(250,204,21,.18), transparent 55%), radial-gradient(900px 600px at 80% 20%, rgba(255,255,255,.07), transparent 55%), radial-gradient(900px 800px at 50% 90%, rgba(250,204,21,.10), transparent 55%), linear-gradient(135deg, rgba(9,9,11,1), rgba(24,24,27,1))';
+    }
+
+    // ===== Calculator =====
+    const packTitle = document.getElementById('packTitle');
+    const packPrice = document.getElementById('packPrice');
+    const packModules = document.getElementById('packModules');
+    const packTip = document.getElementById('packTip');
+
+    function moduleCard(title, desc, price){
+      return `
+        <div class="rounded-2xl border border-white/10 bg-white/5 p-4">
+          <div class="font-semibold">${title}</div>
+          <div class="mt-1 text-sm text-zinc-300">${desc}</div>
+          <div class="mt-3 text-sm font-semibold text-yellow-200">${price}</div>
+        </div>
+      `;
+    }
+
+    function calc(){
+      const job = document.getElementById('job').value;
+      const stuff = Number(document.getElementById('stuff').value);
+      const wantWorkshop = document.getElementById('wantWorkshop').checked;
+      const wantPark = document.getElementById('wantPark').checked;
+
+      let base = 2990; // sklad 10
+      let storage = 'Sklad 10 m²';
+      if(stuff >= 7){ base = 3990; storage = 'Sklad 15 m²'; }
+      if(stuff >= 9){ base = 5990; storage = 'Sklad 30 m²'; }
+
+      // obor přidá logiku
+      if(job === 'heavy' && stuff >= 6) { base += 500; }
+      if(job === 'light' && stuff <= 4) { base -= 200; }
+
+      let total = base;
+      const mods = [];
+      mods.push(moduleCard('Modul A — ' + storage, 'regály • elektřina • možnost temperace', `${Math.max(base, 2490).toLocaleString('cs-CZ')} Kč`));
+
+      if(wantWorkshop){
+        total += 3490;
+        mods.push(moduleCard('Modul B — Dílna', 'světla • zásuvky • větrání (volit.)', '3 490 Kč'));
+      }
+      if(wantPark){
+        total += 690;
+        mods.push(moduleCard('Modul C — Park', 'dodávka přímo u boxu', '690 Kč'));
+      }
+
+      // Tip
+      let tip = 'Začni menším skladem a až budeš mít víc zakázek, přidáš další modul vedle.';
+      if(wantWorkshop && wantPark) tip = 'Tohle je „řemeslnická základna“: práce + sklad + auto. Nejrychlejší režim pro zakázky.';
+      if(job === 'light') tip = 'Pro montáže stačí menší sklad + park. Dílna je bonus, když chceš mít stálou základnu.';
+      if(job === 'heavy') tip = 'U výroby a e‑shopu se vyplatí větší sklad (15–30 m²) a časem přidat druhý modul.';
+
+      // Název balíčku
+      let name = 'Start';
+      if(total >= 6500) name = 'TOP pro řemeslo';
+      if(total >= 9500) name = 'Pro';
+
+      packTitle.textContent = name;
+      packPrice.textContent = `${total.toLocaleString('cs-CZ')} Kč/měs`;
+      packModules.innerHTML = mods.join('');
+      packTip.textContent = tip;
+
+      // Update CTA text
+      const cta = document.getElementById('ctaFromCalc');
+      cta.textContent = `Poptat: ${name}`;
+      cta.dataset.pack = `${name} | ${storage} | dílna:${wantWorkshop?'ano':'ne'} | park:${wantPark?'ano':'ne'} | ${total} Kč/měs`;
+    }
+
+    document.getElementById('calcBtn').addEventListener('click', calc);
+    // initial
+    calc();
+
+    // Pick buttons from modules
+    document.querySelectorAll('.pick').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const which = btn.dataset.pick;
+        const wantWorkshop = document.getElementById('wantWorkshop');
+        const wantPark = document.getElementById('wantPark');
+        if(which === 'A'){ wantWorkshop.checked = false; wantPark.checked = true; }
+        if(which === 'B'){ wantWorkshop.checked = true; wantPark.checked = true; }
+        if(which === 'C'){ wantWorkshop.checked = false; wantPark.checked = true; }
+        document.getElementById('kalkulacka').scrollIntoView({ behavior: 'smooth' });
+        setTimeout(calc, 250);
+      });
+    });
+
+    // Copy pack
+    const copyBtn = document.getElementById('copyPack');
+    const copyToast = document.getElementById('copyToast');
+    copyBtn.addEventListener('click', async () => {
+      const txt = document.getElementById('ctaFromCalc').dataset.pack || 'WorkBox sestava';
+      try{
+        await navigator.clipboard.writeText(txt);
+        copyToast.classList.remove('hidden');
+        setTimeout(()=>copyToast.classList.add('hidden'), 1600);
+      } catch(e){
+        openModal('V prohlížeči nejde kopírovat automaticky. Zkopíruj text ručně: ' + txt);
+      }
+    });
+
+    // ===== Modal =====
+    const modal = document.getElementById('modal');
+    const modalText = document.getElementById('modalText');
+    function openModal(text){
+      modalText.textContent = text;
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+    }
+    function closeModal(){
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+    window.openModal = openModal;
+    window.closeModal = closeModal;
+
+    document.getElementById('openLead').addEventListener('click', () => openModal('Pošli poptávku — navrhneme sestavu a cenu podle lokality.'));
+
+    // ===== Optional video background =====
+    const bgVideo = document.getElementById('bgVideo');
+    const toggleVideo = document.getElementById('toggleVideo');
+    let videoOn = false;
+    toggleVideo.addEventListener('click', () => {
+      videoOn = !videoOn;
+      if(videoOn){
+        // Sem vlož video URL (např. reels-like záběr kontejnerů / práce). Příklad:
+        // bgVideo.src = 'videos/workbox.mp4';
+        if(!bgVideo.src){
+          openModal('Video není nastavené. V kódu doplň: bgVideo.src = "..." (mp4/webm).');
+          videoOn = false;
+          return;
+        }
+        bgVideo.classList.remove('hidden');
+        toggleVideo.textContent = 'Vypnout video pozadí';
+      } else {
+        bgVideo.classList.add('hidden');
+        toggleVideo.textContent = 'Zapnout video pozadí';
+      }
+    });
+
+    // ===== Year =====
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ===== Init theme =====
+    const saved = localStorage.getItem('wb_theme') || 'dark';
+    applyTheme(saved);
+    updateMesh();
+
+    // Smooth anchor scroll offset (header)
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
