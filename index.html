@@ -510,7 +510,7 @@
     </div>
   </section>
 
-  <footer class="border-t bg-white">
+  <footer class="border-t bg-white relative overflow-hidden">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-4 gap-6 text-sm">
       <div>
         <div class="flex items-center gap-3">
@@ -546,6 +546,10 @@
       </div>
     </div>
     <div class="text-center text-xs text-slate-500 pb-8">© <span id="year"></span> Adresao.cz – Všechna práva vyhrazena.</div>
+      <!-- Silueta České republiky – externí asset -->
+    <img src="cz-outline.svg"
+         alt="Obrys České republiky"
+         class="absolute bottom-0 right-0 w-80 md:w-[560px] opacity-10 text-brand-600 pointer-events-none" />
   </footer>
 
   <script>
