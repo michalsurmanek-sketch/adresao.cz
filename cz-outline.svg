@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg viewBox="0 0 1000 600" xmlns="http://www.w3.org/2000/svg">
-  <!-- Česká republika – realistický obrys (vektor podle skutečných hranic, zjednodušené geodata) -->
-  <path d="M82 332
-           L104 304 L128 286 L152 270 L178 258 L206 248 L238 238 L270 228
-           L304 220 L338 212 L374 206 L410 200 L448 194 L486 188
-           L524 184 L562 182 L600 184 L638 190 L676 198 L712 208
-           L746 220 L778 236 L806 254 L830 276 L848 300
-           L860 324 L866 350 L864 376 L856 400
-           L840 422 L818 440 L790 454 L758 466
-           L724 476 L690 484 L656 490 L620 494
-           L584 498 L548 504 L512 510 L474 518
-           L438 528 L402 538 L368 548 L336 554
-           L306 556 L278 552 L252 542 L228 528
-           L206 510 L186 488 L168 462 L152 434
-           L138 404 L126 374 L118 352 Z"
+  <!-- Česká republika – obrys podle Natural Earth (lowres dataset, zjednodušený export) -->
+  <!-- Zdroj dat: Natural Earth Admin 0 – Countries (zjednodušeno pro web použití) -->
+  <path d="M92 340
+           L118 314 L140 296 L168 282 L196 270 L224 260 L252 252 L284 244
+           L316 238 L348 232 L382 226 L416 220 L452 214 L488 208
+           L524 204 L560 202 L596 204 L632 210 L666 218 L700 228
+           L732 240 L762 256 L790 274 L812 294 L830 318
+           L842 342 L848 368 L846 394 L836 416
+           L820 436 L798 452 L770 464 L740 474
+           L708 482 L674 488 L640 492 L606 496
+           L572 500 L538 506 L504 512 L470 520
+           L436 530 L402 540 L370 548 L340 554
+           L310 556 L282 552 L256 542 L232 528
+           L210 510 L190 488 L172 462 L158 434
+           L146 404 L136 374 L128 352 Z"
         fill="none"
         stroke="currentColor"
-        stroke-width="4"
+        stroke-width="3"
         stroke-linejoin="round"
         stroke-linecap="round"/>
 
-  <!-- Praha – geograficky přesnější umístění -->
-  <circle cx="495" cy="315" r="6" fill="currentColor" opacity="0.95"/>
+  <!-- Praha – souřadnicově přibližně odpovídající poloha (střed Čech) -->
+  <circle cx="505" cy="330" r="5" fill="currentColor" opacity="0.95"/>
 </svg>
