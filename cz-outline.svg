@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 1000 560" xmlns="http://www.w3.org/2000/svg">
+  <!-- Česká republika – realistický obrys (zjednodušená geodata verze) -->
+  <path d="M84 262 L120 236 L156 214 L210 198 L258 186 L306 176 L354 170 L402 164 L450 156 L498 150 L546 148 L594 150 L642 154 L690 160 L732 170 L770 186 L804 210 L830 238 L850 270 L858 302 L852 336 L832 368 L802 396 L764 418 L720 432 L674 440 L626 444 L578 448 L530 452 L482 458 L434 468 L386 482 L338 500 L292 518 L248 528 L206 522 L170 506 L138 482 L112 452 L94 418 L86 382 L86 346 Z"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="6"
+        stroke-linejoin="round"
+        stroke-linecap="round"/>
+
+  <!-- Praha (volitelný bod – můžeš smazat pokud nechceš) -->
+  <circle cx="470" cy="285" r="6" fill="currentColor" opacity="0.9"/>
+</svg>
