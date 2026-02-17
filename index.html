@@ -8,15 +8,18 @@
   <meta name="theme-color" content="#0ea5e9">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Favicon / Icons -->
-  <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32.svg">
-  <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16.svg">
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
-  <link rel="icon" type="image/svg+xml" sizes="192x192" href="/android-chrome-192.svg">
-  <link rel="icon" type="image/svg+xml" sizes="512x512" href="/android-chrome-512.svg">
-  <link rel="manifest" href="/manifest.webmanifest">
+  <!-- Favicon / Icons (robust) -->
+  <!-- DŮLEŽITÉ: používám relativní cesty (bez úvodního /), aby to fungovalo i na GitHub Pages v podadresáři -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon-32.svg">
+  <link rel="icon" type="image/svg+xml" sizes="32x32" href="favicon-32.svg">
+  <link rel="icon" type="image/svg+xml" sizes="16x16" href="favicon-16.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.svg">
+  <link rel="icon" type="image/svg+xml" sizes="192x192" href="android-chrome-192.svg">
+  <link rel="icon" type="image/svg+xml" sizes="512x512" href="android-chrome-512.svg">
+  <link rel="manifest" href="manifest.webmanifest">
 
-  <!-- Fonts (CZ diakritika) -->
+  <!-- Google Fonts (CZ diakritika) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
@@ -510,7 +513,10 @@
   <footer class="border-t bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-4 gap-6 text-sm">
       <div>
-        <div class="font-black">Adresao<span class="text-brand-600">.cz</span></div>
+        <div class="flex items-center gap-3">
+          <img src="logo.svg" alt="Adresao.cz logo" class="w-9 h-9 rounded-xl shadow-soft" />
+          <div class="font-black text-lg">Adresao<span class="text-brand-600">.cz</span></div>
+        </div>
         <p class="mt-2 text-slate-600">Virtuální adresa, sídlo firmy a profesionální správa pošty v celé ČR.</p>
       </div>
       <div>
