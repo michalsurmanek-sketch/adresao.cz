@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16" height="16" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+
+  <!-- Favicon 16px ultra zjednodušená verze -->
+  <!-- V malém rozměru musí být extrémně čitelné -->
+
+  <path d="M35 75 L50 35 L65 75"
+        stroke="#0ea5e9"
+        stroke-width="16"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        fill="none"/>
+
+</svg>
