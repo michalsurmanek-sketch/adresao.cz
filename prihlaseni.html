@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Přihlášení | Adresao.cz</title>
+  <meta name="description" content="Přihlášení do klientské zóny Adresao.cz." />
+  <meta name="theme-color" content="#0ea5e9">
+
+  <!-- Favicon / Icons -->
+  <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32.svg">
+  <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="icon" type="image/svg+xml" sizes="192x192" href="/android-chrome-192.svg">
+  <link rel="icon" type="image/svg+xml" sizes="512x512" href="/android-chrome-512.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Roboto','ui-sans-serif','system-ui'] },
+          colors: {
+            brand: {
+              50:'#eef9ff',100:'#d9f1ff',200:'#b0e1ff',300:'#7fd0ff',400:'#47bdff',500:'#0ea5e9',600:'#068dcd',700:'#0870a3',800:'#0a567f',900:'#0b496a'
+            }
+          },
+          boxShadow: { soft: '0 10px 30px rgba(2,6,23,.08)'}
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans text-slate-900 bg-gradient-to-b from-white to-slate-50">
+  <main class="min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-md w-full p-6 sm:p-8 rounded-3xl bg-white border shadow-soft">
+      <div class="flex items-center justify-between">
+        <a href="/" class="text-sm text-brand-700 hover:underline">← Zpět</a>
+        <span class="text-xs text-slate-500">Klientská zóna</span>
+      </div>
+
+      <h1 class="mt-4 text-2xl sm:text-3xl font-black">Přihlášení</h1>
+      <p class="mt-2 text-slate-600">Tahle stránka je připravená jako UI. Napojení na přihlášení doděláme později (např. Supabase / Firebase).</p>
+
+      <form class="mt-6 grid gap-4" onsubmit="event.preventDefault(); alert('Zatím demo. Napojíme později.');">
+        <div>
+          <label class="block text-sm text-slate-600">E‑mail</label>
+          <input type="email" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="jan@firma.cz" />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600">Heslo</label>
+          <input type="password" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="••••••••" />
+        </div>
+        <button type="submit" class="mt-2 w-full px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700">Přihlásit</button>
+      </form>
+
+      <div class="mt-6 flex items-center justify-between text-sm">
+        <a href="mailto:info@adresao.cz" class="text-slate-600 hover:underline">Nemám přístup</a>
+        <a href="/#objednat" class="text-brand-700 hover:underline">Chci službu</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
