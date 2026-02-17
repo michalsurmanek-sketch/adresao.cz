@@ -88,7 +88,7 @@
         </a>
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a href="#sluzby" class="hover:text-brand-700">Služby</a>
-          <a href="#lokality" class="hover:text-brand-700">Lokality</a>
+          <a href="/lokality.html" class="hover:text-brand-700">Lokality</a>
           <a href="#cenik" class="hover:text-brand-700">Ceník</a>
           <a href="#jaktofunguje" class="hover:text-brand-700">Jak to funguje</a>
           <a href="#faq" class="hover:text-brand-700">FAQ</a>
@@ -107,7 +107,7 @@
     <div id="mobileNav" class="md:hidden hidden border-t border-slate-200 bg-white">
       <div class="px-4 py-3 grid gap-3 text-sm">
         <a class="block" href="#sluzby">Služby</a>
-        <a class="block" href="#lokality">Lokality</a>
+        <a class="block" href="/lokality.html">Lokality</a>
         <a class="block" href="#cenik">Ceník</a>
         <a class="block" href="#jaktofunguje">Jak to funguje</a>
         <a class="block" href="#faq">FAQ</a>
@@ -353,7 +353,7 @@
       <div class="p-6 sm:p-8 rounded-3xl border bg-white shadow-soft">
         <h2 class="text-2xl sm:text-3xl font-black">Nezávazná poptávka</h2>
         <p class="mt-1 text-slate-600">Vyplňte pár údajů a ozveme se do 24 hodin.</p>
-        <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4" onsubmit="event.preventDefault(); alert('Děkujeme! Ozveme se zpět.');">
+        <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4" onsubmit="event.preventDefault(); window.location.href='/dekuji.html';">
           <div>
             <label class="block text-sm text-slate-600">Jméno a příjmení</label>
             <input type="text" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Jan Novák" />
@@ -491,7 +491,7 @@
             </div>
             <div>
               <div class="text-sm text-slate-500">Klientská zóna</div>
-              <a href="#" class="font-medium">Přihlásit</a>
+              <a href="/prihlaseni.html" class="font-medium">Přihlásit</a>
             </div>
           </div>
         </div>
@@ -525,8 +525,10 @@
         <div class="font-semibold">Důležité</div>
         <ul class="mt-2 space-y-1 text-slate-600">
           <li><a href="#faq" class="hover:text-brand-700">FAQ</a></li>
-          <li><a href="#" class="hover:text-brand-700">Obchodní podmínky</a></li>
-          <li><a href="#" class="hover:text-brand-700">GDPR</a></li>
+          <li><a href="/obchodni-podminky.html" class="hover:text-brand-700">Obchodní podmínky</a></li>
+          <li><a href="/gdpr.html" class="hover:text-brand-700">GDPR</a></li>
+          <li><a href="/prihlaseni.html" class="hover:text-brand-700">Přihlášení</a></li>
+          <li><a href="/lokality.html" class="hover:text-brand-700">Lokality</a></li>
         </ul>
       </div>
       <div>
