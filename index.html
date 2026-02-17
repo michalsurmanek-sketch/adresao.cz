@@ -1,12 +1,20 @@
-<!doctype html>
+<<!doctype html>
 <html lang="cs">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Virtuální adresa – sídlo firmy, přebírání pošty, coworking | virtualniadresa.cz</title>
+  <title>Adresao.cz – virtuální adresa, sídlo firmy a správa pošty v ČR</title>
   <meta name="description" content="Virtuální adresa a oficiální sídlo firmy v Praze, Brně, Ostravě a dalších městech. Přebírání a sken pošty, přeposílání, krátkodobé kanceláře, zasedačky. Rychle, legálně, bez starostí." />
   <meta name="theme-color" content="#0ea5e9">
-  <link rel="icon" href="/favicon.ico">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- Favicon / Icons -->
+  <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32.svg">
+  <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="icon" type="image/svg+xml" sizes="192x192" href="/android-chrome-192.svg">
+  <link rel="icon" type="image/svg+xml" sizes="512x512" href="/android-chrome-512.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
 
   <!-- Google Fonts (CZ diakritika) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,7 +42,7 @@
 
   <!-- Open Graph -->
   <meta property="og:type" content="website" />
-  <meta property="og:title" content="Virtuální adresa – oficiální sídlo firmy bez starostí" />
+  <meta property="og:title" content="Adresao.cz – virtuální adresa, sídlo firmy a správa pošty" />
   <meta property="og:description" content="Virtuální sídlo, přebírání a sken pošty, přeposílání, zasedačky. Praha, Brno, Ostrava a další lokality. Online objednávka do 5 minut." />
   <meta property="og:image" content="/og-image.jpg" />
 
@@ -43,9 +51,9 @@
   {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "name": "virtualniadresa.cz",
-    "url": "https://www.virtualniadresa.cz",
-    "logo": "https://www.virtualniadresa.cz/logo.svg",
+    "name": "Adresao.cz",
+    "url": "https://www.adresao.cz",
+    "logo": "https://www.adresao.cz/logo.svg",
     "sameAs": ["https://www.facebook.com/", "https://www.linkedin.com/"],
     "offers": {
       "@type": "Offer",
@@ -63,9 +71,20 @@
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
-        <a href="#home" class="flex items-center gap-2">
-          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-brand-100 text-brand-700 font-black">VA</span>
-          <span class="font-black tracking-tight text-lg">virtualniadresa<span class="text-brand-600">.cz</span></span>
+        <a href="#home" class="flex items-center gap-3">
+          <!-- Moderní SVG logo AO -->
+          <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="rounded-xl shadow-soft">
+            <defs>
+              <linearGradient id="aoGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#0ea5e9"/>
+                <stop offset="100%" stop-color="#0870a3"/>
+              </linearGradient>
+            </defs>
+            <rect width="100" height="100" rx="24" fill="url(#aoGrad)"/>
+            <path d="M30 70 L45 30 L60 70" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+            <circle cx="70" cy="50" r="18" stroke="white" stroke-width="8" fill="none"/>
+          </svg>
+          <span class="font-black tracking-tight text-lg">Adresao<span class="text-brand-600">.cz</span></span>
         </a>
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a href="#sluzby" class="hover:text-brand-700">Služby</a>
@@ -349,14 +368,65 @@
           </div>
           <div>
             <label class="block text-sm text-slate-600">Preferovaná lokalita</label>
-            <select class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600">
-              <option>Praha 1</option>
-              <option>Brno-střed</option>
-              <option>Ostrava</option>
-              <option>Plzeň</option>
-              <option>Zlín</option>
-              <option>Liberec</option>
+            <select id="lokalitaSelect" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600">
+              <option value="Praha 1, Na Příkopě 15">Praha 1</option>
+              <option value="Brno-střed, Masarykova 3">Brno-střed</option>
+              <option value="Ostrava, Nádražní 28">Ostrava</option>
+              <option value="Plzeň, Americká 15">Plzeň</option>
+              <option value="Zlín, tř. T. Bati 123">Zlín</option>
+              <option value="Liberec, Pražská 12">Liberec</option>
             </select>
+            <div class="mt-4">
+              <div class="mt-4 space-y-3">
+              <!-- Trust chips -->
+              <div class="flex flex-wrap gap-2 text-xs">
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100">
+                  <span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span>
+                  Rejstříkově vhodná adresa
+                </span>
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-50 text-slate-700 border">
+                  Označení schránky
+                </span>
+                <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-slate-50 text-slate-700 border">
+                  Souhlas vlastníka
+                </span>
+              </div>
+
+              <!-- Map -->
+              <div id="mapContainer" class="w-full h-64 rounded-2xl overflow-hidden border bg-white">
+                <iframe id="googleMap"
+                        width="100%"
+                        height="100%"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q=Praha+1+Na+Příkopě+15&output=embed">
+                </iframe>
+              </div>
+
+              <!-- Address + actions -->
+              <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+                <div class="text-sm text-slate-700">
+                  <div class="text-xs text-slate-500">Zobrazená adresa</div>
+                  <div id="selectedAddress" class="font-semibold">Praha 1, Na Příkopě 15</div>
+                </div>
+                <div class="flex gap-2">
+                  <a id="openMapsLink" target="_blank" rel="noopener" 
+                     class="px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 text-sm">
+                    Otevřít v Mapách
+                  </a>
+                  <a id="streetViewLink" target="_blank" rel="noopener" 
+                     class="px-4 py-2 rounded-xl bg-slate-900 text-white hover:opacity-90 text-sm">
+                    Street View
+                  </a>
+                </div>
+              </div>
+
+              <div class="text-xs text-slate-500">
+                *Mapa slouží pro ověření lokality a důvěryhodnosti. Konkrétní adresa ve smlouvě se může lišit dle aktuální kapacity, vždy ale v rámci vybrané lokality.
+              </div>
+            </div>
           </div>
           <div class="sm:col-span-2">
             <label class="block text-sm text-slate-600">Poznámka</label>
@@ -408,7 +478,7 @@
           <div class="mt-4 grid sm:grid-cols-2 gap-4 text-slate-700">
             <div>
               <div class="text-sm text-slate-500">E‑mail</div>
-              <a href="mailto:info@virtualniadresa.cz" class="font-medium">info@virtualniadresa.cz</a>
+              <a href="mailto:info@adresao.cz" class="font-medium">info@adresao.cz</a>
             </div>
             <div>
               <div class="text-sm text-slate-500">Telefon</div>
@@ -416,7 +486,7 @@
             </div>
             <div>
               <div class="text-sm text-slate-500">Fakturační údaje</div>
-              <div class="font-medium">VA Services s.r.o., IČO 12345678</div>
+              <div class="font-medium">Adresao Group s.r.o., IČO 12345678</div>
             </div>
             <div>
               <div class="text-sm text-slate-500">Klientská zóna</div>
@@ -439,7 +509,7 @@
   <footer class="border-t bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid md:grid-cols-4 gap-6 text-sm">
       <div>
-        <div class="font-black">virtualniadresa<span class="text-brand-600">.cz</span></div>
+        <div class="font-black">Adresao<span class="text-brand-600">.cz</span></div>
         <p class="mt-2 text-slate-600">Virtuální adresa, sídlo firmy a profesionální správa pošty v celé ČR.</p>
       </div>
       <div>
@@ -461,12 +531,12 @@
       <div>
         <div class="font-semibold">Kontakt</div>
         <ul class="mt-2 space-y-1 text-slate-600">
-          <li><a href="mailto:info@virtualniadresa.cz" class="hover:text-brand-700">info@virtualniadresa.cz</a></li>
+          <li><a href="mailto:info@adresao.cz" class="hover:text-brand-700">info@adresao.cz</a></li>
           <li><a href="tel:+420777000000" class="hover:text-brand-700">+420 777 000 000</a></li>
         </ul>
       </div>
     </div>
-    <div class="text-center text-xs text-slate-500 pb-8">© <span id="year"></span> virtualniadresa.cz – Všechna práva vyhrazena.</div>
+    <div class="text-center text-xs text-slate-500 pb-8">© <span id="year"></span> Adresao.cz – Všechna práva vyhrazena.</div>
   </footer>
 
   <script>
@@ -479,6 +549,34 @@
 
     // Dynamic year
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Google mapa podle vybrané lokality + odkazy pro důvěryhodnost
+    const select = document.getElementById('lokalitaSelect');
+    const mapFrame = document.getElementById('googleMap');
+    const selectedAddressEl = document.getElementById('selectedAddress');
+    const openMapsLink = document.getElementById('openMapsLink');
+    const streetViewLink = document.getElementById('streetViewLink');
+
+    function updateMap(addressRaw) {
+      const address = encodeURIComponent(addressRaw);
+      if (mapFrame) mapFrame.src = `https://www.google.com/maps?q=${address}&output=embed`;
+      if (selectedAddressEl) selectedAddressEl.textContent = addressRaw;
+
+      // Otevření v Google Maps
+      if (openMapsLink) openMapsLink.href = `https://www.google.com/maps/search/?api=1&query=${address}`;
+
+      // Street View (přímý odkaz na lokaci; Google si režim dopne podle dostupnosti)
+      if (streetViewLink) streetViewLink.href = `https://www.google.com/maps?layer=c&cbll=&q=${address}`;
+    }
+
+    // Init
+    if (select?.value) updateMap(select.value);
+
+    // Change
+    select?.addEventListener('change', function() {
+      updateMap(this.value);
+    });
   </script>
 </body>
 </html>
+
