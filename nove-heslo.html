@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Nastavení nového hesla | Adresao.cz</title>
+  <meta name="description" content="Nastavení nového hesla pro klientskou zónu Adresao.cz." />
+  <meta name="theme-color" content="#0ea5e9">
+
+  <!-- Favicon / Icons -->
+  <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32.svg">
+  <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="icon" type="image/svg+xml" sizes="192x192" href="/android-chrome-192.svg">
+  <link rel="icon" type="image/svg+xml" sizes="512x512" href="/android-chrome-512.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Roboto','ui-sans-serif','system-ui'] },
+          colors: {
+            brand: {
+              50:'#eef9ff',100:'#d9f1ff',200:'#b0e1ff',300:'#7fd0ff',400:'#47bdff',500:'#0ea5e9',600:'#068dcd',700:'#0870a3',800:'#0a567f',900:'#0b496a'
+            }
+          },
+          boxShadow: { soft: '0 10px 30px rgba(2,6,23,.08)'}
+        }
+      }
+    }
+  </script>
+</head>
+<body class="font-sans text-slate-900 bg-gradient-to-b from-white to-slate-50">
+  <main class="min-h-screen flex items-center justify-center px-4">
+    <div class="max-w-md w-full p-6 sm:p-8 rounded-3xl bg-white border shadow-soft">
+      <div class="flex items-center justify-between">
+        <a href="/prihlaseni.html" class="text-sm text-brand-700 hover:underline">← Zpět na přihlášení</a>
+        <span class="text-xs text-slate-500">Klientská zóna</span>
+      </div>
+
+      <h1 class="mt-4 text-2xl sm:text-3xl font-black">Nastavení nového hesla</h1>
+      <p class="mt-2 text-slate-600">Otevřel jsi odkaz z e-mailu. Nastav si nové heslo a přihlas se.</p>
+
+      <div id="status" class="hidden mt-4 p-4 rounded-2xl text-sm"></div>
+
+      <form id="pwForm" class="mt-6 grid gap-4">
+        <div>
+          <label class="block text-sm text-slate-600">Nové heslo</label>
+          <input id="pw1" type="password" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Min. 8 znaků" />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600">Znovu nové heslo</label>
+          <input id="pw2" type="password" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Zopakuj heslo" />
+        </div>
+        <button type="submit" class="mt-2 w-full px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700">Uložit nové heslo</button>
+      </form>
+
+      <div class="mt-6 text-xs text-slate-500">Pokud ti odkaz vypršel, vrať se na přihlášení a pošli si reset znovu.</div>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script>
+    // ===== Supabase (nastav si URL + ANON KEY – stejné jako v prihlaseni.html) =====
+    const SUPABASE_URL = 'PASTE_SUPABASE_URL_HERE';
+    const SUPABASE_ANON_KEY = 'PASTE_SUPABASE_ANON_KEY_HERE';
+    const supabase = window.supabase?.createClient?.(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    const statusBox = document.getElementById('status');
+    function showStatus(msg, type = 'info') {
+      if (!statusBox) return;
+      statusBox.className = 'mt-4 p-4 rounded-2xl text-sm';
+      if (type === 'ok') statusBox.classList.add('bg-emerald-50','text-emerald-800','border','border-emerald-200');
+      else if (type === 'err') statusBox.classList.add('bg-rose-50','text-rose-800','border','border-rose-200');
+      else statusBox.classList.add('bg-slate-50','text-slate-800','border','border-slate-200');
+      statusBox.textContent = msg;
+      statusBox.classList.remove('hidden');
+    }
+
+    // V recovery odkazu je token v URL hash (#access_token=...&refresh_token=...&type=recovery)
+    async function ensureSessionFromHash() {
+      if (!supabase) return;
+      const hash = window.location.hash;
+      if (!hash || !hash.includes('access_token')) return;
+
+      const params = new URLSearchParams(hash.replace('#', ''));
+      const access_token = params.get('access_token');
+      const refresh_token = params.get('refresh_token');
+      if (!access_token || !refresh_token) return;
+
+      const { error } = await supabase.auth.setSession({ access_token, refresh_token });
+      if (error) showStatus('Odkaz je neplatný nebo vypršel. Pošli si reset znovu.', 'err');
+      else {
+        // vyčistit URL
+        history.replaceState(null, '', window.location.pathname);
+      }
+    }
+
+    const pwForm = document.getElementById('pwForm');
+    pwForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!supabase) return showStatus('Chybí nastavení Supabase. Doplň SUPABASE_URL a SUPABASE_ANON_KEY.', 'err');
+
+      const p1 = document.getElementById('pw1')?.value || '';
+      const p2 = document.getElementById('pw2')?.value || '';
+      if (p1.length < 8) return showStatus('Heslo musí mít alespoň 8 znaků.', 'err');
+      if (p1 !== p2) return showStatus('Hesla se neshodují.', 'err');
+
+      const { error } = await supabase.auth.updateUser({ password: p1 });
+      if (error) return showStatus('Nepovedlo se uložit nové heslo. Zkus to znovu.', 'err');
+
+      showStatus('Hotovo. Heslo bylo změněno. Přesměrovávám na přihlášení…', 'ok');
+      setTimeout(() => { window.location.href = '/prihlaseni.html'; }, 900);
+    });
+
+    // Init
+    ensureSessionFromHash();
+  </script>
+</body>
+</html>
