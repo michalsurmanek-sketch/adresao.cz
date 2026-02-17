@@ -22,6 +22,7 @@
 
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script>
     tailwind.config = {
       theme: {
@@ -41,31 +42,162 @@
 <body class="font-sans text-slate-900 bg-gradient-to-b from-white to-slate-50">
   <main class="min-h-screen flex items-center justify-center px-4">
     <div class="max-w-md w-full p-6 sm:p-8 rounded-3xl bg-white border shadow-soft">
+      <!-- Status messages -->
+      <div id="status" class="hidden mb-4 p-4 rounded-2xl text-sm"></div>
       <div class="flex items-center justify-between">
         <a href="/" class="text-sm text-brand-700 hover:underline">← Zpět</a>
         <span class="text-xs text-slate-500">Klientská zóna</span>
       </div>
 
       <h1 class="mt-4 text-2xl sm:text-3xl font-black">Přihlášení</h1>
-      <p class="mt-2 text-slate-600">Tahle stránka je připravená jako UI. Napojení na přihlášení doděláme později (např. Supabase / Firebase).</p>
+      <p class="mt-2 text-slate-600">Klientská zóna pro správu pošty, faktur a dokumentů. Přístup získáš po podpisu smlouvy – účet vytváříme automaticky.</p>
 
-      <form class="mt-6 grid gap-4" onsubmit="event.preventDefault(); alert('Zatím demo. Napojíme později.');">
+      <form id="loginForm" class="mt-6 grid gap-4">
         <div>
           <label class="block text-sm text-slate-600">E‑mail</label>
-          <input type="email" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="jan@firma.cz" />
+          <input id="loginEmail" type="email" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="jan@firma.cz" />
         </div>
         <div>
           <label class="block text-sm text-slate-600">Heslo</label>
-          <input type="password" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="••••••••" />
+          <input id="loginPass" type="password" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="••••••••" />
         </div>
         <button type="submit" class="mt-2 w-full px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700">Přihlásit</button>
       </form>
 
-      <div class="mt-6 flex items-center justify-between text-sm">
+      <!-- Zapomenuté heslo -->
+      <div class="mt-4 flex items-center justify-between text-sm">
+        <button type="button" id="openReset" class="text-slate-600 hover:underline">Zapomenuté heslo?</button>
         <a href="mailto:info@adresao.cz" class="text-slate-600 hover:underline">Nemám přístup</a>
-        <a href="/#objednat" class="text-brand-700 hover:underline">Chci službu</a>
+      </div>
+
+      <!-- Reset modal (UI demo) -->
+      <div id="resetModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-sm" data-close></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+          <div class="w-full max-w-md p-6 sm:p-8 rounded-3xl bg-white border shadow-soft">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <div class="text-xs uppercase tracking-wider text-slate-500">Obnova přístupu</div>
+                <h2 class="mt-1 text-xl font-black">Reset hesla</h2>
+              </div>
+              <button type="button" class="p-2 rounded-xl hover:bg-slate-100" data-close aria-label="Zavřít">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+              </button>
+            </div>
+
+            <p class="mt-3 text-slate-600 text-sm">Zadej e-mail, na který ti přišel přístup do klientské zóny. Pošleme ti odkaz pro nastavení nového hesla.</p>
+
+            <form id="resetForm" class="mt-5 grid gap-4">
+              <div>
+                <label class="block text-sm text-slate-600">E‑mail</label>
+                <input id="resetEmail" type="email" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="jan@firma.cz" />
+              </div>
+              <button type="submit" class="w-full px-6 py-3 rounded-2xl bg-slate-900 text-white font-medium hover:opacity-90">Poslat reset odkaz</button>
+              <button type="button" class="w-full px-6 py-3 rounded-2xl border bg-white hover:bg-slate-50 font-medium" data-close>Zavřít</button>
+            </form>
+
+            <div class="mt-4 text-xs text-slate-500">Pozn.: Reset je dostupný pouze pro aktivní klienty. Pokud e-mail nenajdeme, nic se neprovede.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Aktivace účtu (pouze pro klienty) -->
+      <div class="mt-8 pt-6 border-t">
+        <h2 class="text-lg font-bold">Aktivace účtu</h2>
+        <p class="mt-2 text-sm text-slate-600">
+          Klientský účet vytváříme automaticky po podpisu smlouvy a úhradě služby.
+          Přístupové údaje obdržíš e‑mailem. Registrace není veřejně dostupná.
+        </p>
+        
+        <div class="mt-4 p-4 rounded-2xl bg-brand-50 border border-brand-100 text-sm text-brand-800">
+          Nemáš ještě službu? Nejprve odešli nezávaznou poptávku a my ti připravíme smlouvu.
+        </div>
+
+        <a href="/#objednat" class="mt-4 inline-flex w-full justify-center px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700">
+          Přejít na objednávku služby
+        </a>
+      </div>
+
+      <div class="mt-6 flex items-center justify-between text-sm">
+        <a href="/lokality.html" class="text-slate-600 hover:underline">Lokality</a>
+        <a href="/obchodni-podminky.html" class="text-slate-600 hover:underline">Podmínky</a>
       </div>
     </div>
   </main>
+
+  <script>
+    // ===== Supabase (nastav si URL + ANON KEY) =====
+    const SUPABASE_URL = 'PASTE_SUPABASE_URL_HERE';
+    const SUPABASE_ANON_KEY = 'PASTE_SUPABASE_ANON_KEY_HERE';
+    const supabase = window.supabase?.createClient?.(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // UI helpers
+    const statusBox = document.getElementById('status');
+    function showStatus(msg, type = 'info') {
+      if (!statusBox) return;
+      statusBox.className = 'mb-4 p-4 rounded-2xl text-sm';
+      if (type === 'ok') statusBox.classList.add('bg-emerald-50','text-emerald-800','border','border-emerald-200');
+      else if (type === 'err') statusBox.classList.add('bg-rose-50','text-rose-800','border','border-rose-200');
+      else statusBox.classList.add('bg-slate-50','text-slate-800','border','border-slate-200');
+      statusBox.textContent = msg;
+      statusBox.classList.remove('hidden');
+    }
+
+    // ===== Modal open/close =====
+    const openReset = document.getElementById('openReset');
+    const modal = document.getElementById('resetModal');
+
+    function showModal() { modal?.classList.remove('hidden'); }
+    function hideModal() { modal?.classList.add('hidden'); }
+
+    openReset?.addEventListener('click', showModal);
+
+    modal?.addEventListener('click', (e) => {
+      const t = e.target;
+      if (t && (t.hasAttribute('data-close') || t.closest('[data-close]'))) hideModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal && !modal.classList.contains('hidden')) hideModal();
+    });
+
+    // ===== Login =====
+    const loginForm = document.getElementById('loginForm');
+    loginForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!supabase) return showStatus('Chybí nastavení Supabase. Doplň SUPABASE_URL a SUPABASE_ANON_KEY.', 'err');
+
+      const email = document.getElementById('loginEmail')?.value?.trim();
+      const password = document.getElementById('loginPass')?.value;
+      if (!email || !password) return;
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+      if (error) return showStatus('Přihlášení se nepovedlo. Zkontroluj e-mail a heslo.', 'err');
+
+      showStatus('Přihlášeno. Přesměrovávám…', 'ok');
+      // TODO: až bude klientská zóna, změň na /klient/
+      setTimeout(() => { window.location.href = '/'; }, 600);
+    });
+
+    // ===== Reset password email =====
+    const resetForm = document.getElementById('resetForm');
+    resetForm?.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!supabase) return showStatus('Chybí nastavení Supabase. Doplň SUPABASE_URL a SUPABASE_ANON_KEY.', 'err');
+
+      const email = document.getElementById('resetEmail')?.value?.trim();
+      if (!email) return;
+
+      // Redirect po kliknutí v e-mailu → stránka pro nastavení nového hesla
+      const redirectTo = window.location.origin + '/nove-heslo.html';
+
+      const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+      if (error) return showStatus('Nepovedlo se odeslat reset e-mail. Zkus to za chvíli.', 'err');
+
+      hideModal();
+      showStatus('Pokud e-mail existuje, poslali jsme odkaz pro reset hesla.', 'ok');
+    });
+    });
+  </script>
 </body>
 </html>
