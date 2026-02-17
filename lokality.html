@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lokality | Adresao.cz</title>
+  <meta name="description" content="Přehled lokalit Adresao.cz – virtuální adresa a sídlo firmy v Praze, Brně, Ostravě a dalších městech." />
+  <meta name="theme-color" content="#0ea5e9">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+  <!-- Favicon / Icons -->
+  <link rel="icon" type="image/svg+xml" sizes="32x32" href="/favicon-32.svg">
+  <link rel="icon" type="image/svg+xml" sizes="16x16" href="/favicon-16.svg">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.svg">
+  <link rel="icon" type="image/svg+xml" sizes="192x192" href="/android-chrome-192.svg">
+  <link rel="icon" type="image/svg+xml" sizes="512x512" href="/android-chrome-512.svg">
+  <link rel="manifest" href="/manifest.webmanifest">
+
+  <!-- Google Fonts (CZ diakritika) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Roboto','ui-sans-serif','system-ui'] },
+          colors: {
+            brand: {
+              50:'#eef9ff',100:'#d9f1ff',200:'#b0e1ff',300:'#7fd0ff',400:'#47bdff',500:'#0ea5e9',600:'#068dcd',700:'#0870a3',800:'#0a567f',900:'#0b496a'
+            }
+          },
+          boxShadow: { soft: '0 10px 30px rgba(2,6,23,.08)'}
+        }
+      }
+    }
+  </script>
+  <style> html{scroll-behavior:smooth} </style>
+</head>
+<body class="font-sans text-slate-900 bg-gradient-to-b from-white to-slate-50">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex h-16 items-center justify-between">
+        <a href="/" class="flex items-center gap-3">
+          <img src="/logo.svg" alt="Adresao.cz" class="h-9 w-9" onerror="this.style.display='none'" />
+          <span class="font-black tracking-tight text-lg">Adresao<span class="text-brand-600">.cz</span></span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-sm">
+          <a href="/#sluzby" class="hover:text-brand-700">Služby</a>
+          <a href="/lokality.html" class="text-brand-700 font-semibold">Lokality</a>
+          <a href="/#cenik" class="hover:text-brand-700">Ceník</a>
+          <a href="/#jaktofunguje" class="hover:text-brand-700">Jak to funguje</a>
+          <a href="/#faq" class="hover:text-brand-700">FAQ</a>
+          <a href="/#kontakt" class="hover:text-brand-700">Kontakt</a>
+        </nav>
+        <div class="flex items-center gap-3">
+          <a href="/#objednat" class="hidden sm:inline-flex px-4 py-2 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 shadow-soft">Objednat</a>
+          <a href="/" class="inline-flex px-4 py-2 rounded-xl border bg-white hover:bg-slate-50">← Zpět</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,.12),transparent_55%),radial-gradient(ellipse_at_bottom_left,rgba(14,165,233,.10),transparent_55%)]"></div>
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-14">
+      <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6">
+        <div>
+          <div class="text-xs uppercase tracking-wider text-slate-500">Adresao.cz</div>
+          <h1 class="mt-2 text-3xl sm:text-4xl font-black tracking-tight">Lokality po celé ČR</h1>
+          <p class="mt-3 text-slate-700 text-lg max-w-2xl">Vyber si město, podívej se na mapu a rovnou odešli nezávaznou poptávku. Vše v tech stylu, přehledně a bez zbytečných keců.</p>
+        </div>
+        <div class="flex flex-wrap gap-2 text-xs">
+          <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-medium">Rejstříkově vhodné</span>
+          <span class="px-3 py-1 rounded-full bg-brand-100 text-brand-700 font-medium">Smlouva online</span>
+          <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-medium">Aktivace do 24 h</span>
+        </div>
+      </div>
+
+      <!-- Filters -->
+      <div class="mt-8 grid sm:grid-cols-3 gap-3">
+        <div class="sm:col-span-2">
+          <label class="block text-sm text-slate-600">Hledat</label>
+          <input id="q" type="text" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="např. Praha, Brno, zasedačka…" />
+        </div>
+        <div>
+          <label class="block text-sm text-slate-600">Filtr</label>
+          <select id="filter" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600">
+            <option value="all">Vše</option>
+            <option value="meeting">Zasedačka</option>
+            <option value="cowork">Coworking</option>
+            <option value="pickup">Přebírání balíků</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main: map + list -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
+    <div class="grid lg:grid-cols-5 gap-6 items-start">
+
+      <!-- Map column -->
+      <section class="lg:col-span-3">
+        <div class="relative group">
+          <div class="absolute -inset-1 bg-gradient-to-r from-brand-500/25 to-brand-700/25 rounded-3xl blur opacity-60 group-hover:opacity-80 transition"></div>
+          <div class="relative rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-xl">
+            <div class="px-5 py-4 border-b bg-white/80 backdrop-blur flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+              <div>
+                <div class="text-xs uppercase tracking-wider text-slate-500">Vybraná lokalita</div>
+                <div id="selectedTitle" class="text-xl font-black">Praha 1</div>
+                <div id="selectedAddr" class="text-sm text-slate-600">Na Příkopě 15</div>
+              </div>
+              <div class="flex gap-2">
+                <a id="openMaps" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl border bg-white hover:bg-slate-50 text-sm font-medium">Otevřít v Mapách</a>
+                <a id="streetView" target="_blank" rel="noopener" class="px-4 py-2 rounded-xl bg-slate-900 text-white hover:opacity-90 text-sm font-medium">Street View</a>
+              </div>
+            </div>
+            <div class="h-72 lg:h-[520px]">
+              <iframe id="map"
+                      width="100%" height="100%" style="border:0"
+                      loading="lazy" allowfullscreen
+                      referrerpolicy="no-referrer-when-downgrade"
+                      src="https://www.google.com/maps?q=Praha+1+Na+Příkopě+15&output=embed"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick CTA -->
+        <div class="mt-6 p-6 rounded-3xl border bg-white shadow-soft">
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <div>
+              <div class="text-xs uppercase tracking-wider text-slate-500">Rychlá poptávka</div>
+              <div class="text-lg font-black">Chceš tuhle lokalitu?</div>
+              <p class="text-slate-600">Klikni a předvyplníme lokalitu v poptávce na hlavní stránce.</p>
+            </div>
+            <a id="cta" href="/\#objednat" class="px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700 shadow-soft">Poptat tuto lokalitu</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- List column -->
+      <aside class="lg:col-span-2">
+        <div class="p-6 rounded-3xl border bg-white shadow-soft">
+          <div class="flex items-center justify-between">
+            <h2 class="text-xl font-black">Seznam lokalit</h2>
+            <span id="count" class="text-xs text-slate-500"></span>
+          </div>
+          <div id="list" class="mt-4 grid gap-3"></div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="border-t bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+      <div class="text-slate-600">© <span id="year"></span> Adresao.cz</div>
+      <div class="flex gap-4">
+        <a href="/obchodni-podminky.html" class="text-slate-600 hover:text-brand-700">Obchodní podmínky</a>
+        <a href="/gdpr.html" class="text-slate-600 hover:text-brand-700">GDPR</a>
+        <a href="/prihlaseni.html" class="text-slate-600 hover:text-brand-700">Přihlášení</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Data (zatím demo – stejné lokality jako na indexu)
+    const LOCATIONS = [
+      {
+        id: 'praha1',
+        city: 'Praha 1',
+        address: 'Na Příkopě 15',
+        full: 'Praha 1, Na Příkopě 15',
+        price: 'od 149 Kč',
+        tags: ['meeting','cowork'],
+        bullets: ['Rejstříkově vhodná','Příjem + sken pošty','Zasedačka na místě']
+      },
+      {
+        id: 'brno',
+        city: 'Brno-střed',
+        address: 'Masarykova 3',
+        full: 'Brno-střed, Masarykova 3',
+        price: 'od 129 Kč',
+        tags: ['cowork'],
+        bullets: ['Souhlas vlastníka v ceně','Notifikace e‑mailem','Coworking']
+      },
+      {
+        id: 'ostrava',
+        city: 'Ostrava',
+        address: 'Nádražní 28',
+        full: 'Ostrava, Nádražní 28',
+        price: 'od 119 Kč',
+        tags: ['pickup'],
+        bullets: ['Přeposílání zásilek','Archivace podacích lístků','Parkování poblíž']
+      },
+      {
+        id: 'plzen',
+        city: 'Plzeň',
+        address: 'Americká 15',
+        full: 'Plzeň, Americká 15',
+        price: 'od 109 Kč',
+        tags: [],
+        bullets: ['Rejstříkově vhodná','Smlouva online','Boxy na poštu']
+      },
+      {
+        id: 'zlin',
+        city: 'Zlín',
+        address: 'tř. T. Bati 123',
+        full: 'Zlín, tř. T. Bati 123',
+        price: 'od 99 Kč',
+        tags: [],
+        bullets: ['Nejlevnější varianta','Fakturace měsíčně/ročně','Možnost osobního odběru']
+      },
+      {
+        id: 'liberec',
+        city: 'Liberec',
+        address: 'Pražská 12',
+        full: 'Liberec, Pražská 12',
+        price: 'od 109 Kč',
+        tags: ['pickup'],
+        bullets: ['Sken pošty do 24 h','Notifikace SMS/e‑mail','Převzetí balíků']
+      }
+    ];
+
+    const elList = document.getElementById('list');
+    const elCount = document.getElementById('count');
+    const q = document.getElementById('q');
+    const filter = document.getElementById('filter');
+
+    const map = document.getElementById('map');
+    const selectedTitle = document.getElementById('selectedTitle');
+    const selectedAddr = document.getElementById('selectedAddr');
+    const openMaps = document.getElementById('openMaps');
+    const streetView = document.getElementById('streetView');
+    const cta = document.getElementById('cta');
+
+    let activeId = 'praha1';
+
+    function setActive(loc) {
+      activeId = loc.id;
+      selectedTitle.textContent = loc.city;
+      selectedAddr.textContent = loc.address;
+
+      const enc = encodeURIComponent(loc.full);
+      map.src = `https://www.google.com/maps?q=${enc}&output=embed`;
+      openMaps.href = `https://www.google.com/maps/search/?api=1&query=${enc}`;
+      streetView.href = `https://www.google.com/maps?layer=c&cbll=&q=${enc}`;
+
+      // předvyplnění v hash (jen info – index si to může později načíst)
+      cta.href = `/\#objednat?lokalita=${enc}`;
+
+      // zvýraznění karty
+      [...document.querySelectorAll('[data-loc]')].forEach(card => {
+        const isActive = card.getAttribute('data-loc') === activeId;
+        card.classList.toggle('ring-2', isActive);
+        card.classList.toggle('ring-brand-500', isActive);
+        card.classList.toggle('border-brand-200', isActive);
+      });
+    }
+
+    function cardHTML(loc) {
+      const badges = loc.tags.map(t => {
+        const label = t === 'meeting' ? 'Zasedačka' : t === 'cowork' ? 'Coworking' : 'Balíky';
+        return `<span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium">${label}</span>`;
+      }).join('');
+
+      const bullets = loc.bullets.slice(0,3).map(b => `<li>${b}</li>`).join('');
+
+      return `
+        <button type="button" data-loc="${loc.id}" class="text-left w-full p-4 rounded-2xl border bg-white hover:bg-slate-50 transition">
+          <div class="flex items-start justify-between gap-3">
+            <div>
+              <div class="text-xs text-slate-500">${loc.city}</div>
+              <div class="mt-1 font-bold text-lg">${loc.address}</div>
+            </div>
+            <div class="text-sm font-black text-brand-700">${loc.price}</div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-2">${badges}</div>
+          <ul class="mt-3 text-sm text-slate-600 list-disc list-inside">${bullets}</ul>
+        </button>
+      `;
+    }
+
+    function applyFilter() {
+      const term = (q.value || '').trim().toLowerCase();
+      const f = filter.value;
+
+      const items = LOCATIONS.filter(loc => {
+        const hay = `${loc.city} ${loc.address} ${loc.bullets.join(' ')}`.toLowerCase();
+        const okTerm = !term || hay.includes(term);
+        const okFilter = (f === 'all') || loc.tags.includes(f);
+        return okTerm && okFilter;
+      });
+
+      elCount.textContent = `${items.length} / ${LOCATIONS.length}`;
+      elList.innerHTML = items.map(cardHTML).join('');
+
+      // bind clicks
+      items.forEach(loc => {
+        const btn = elList.querySelector(`[data-loc="${loc.id}"]`);
+        btn?.addEventListener('click', () => setActive(loc));
+      });
+
+      // když aktivní není ve výsledcích, zvol první
+      const stillThere = items.some(x => x.id === activeId);
+      if (!stillThere && items[0]) setActive(items[0]);
+      else {
+        const active = LOCATIONS.find(x => x.id === activeId);
+        if (active) setActive(active);
+      }
+    }
+
+    q.addEventListener('input', applyFilter);
+    filter.addEventListener('change', applyFilter);
+
+    // Init
+    applyFilter();
+  </script>
+</body>
+</html>
