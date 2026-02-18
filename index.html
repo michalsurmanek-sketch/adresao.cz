@@ -1,4 +1,4 @@
-<<!doctype html>
+<!doctype html>
 <html lang="cs">
 <head>
   <meta charset="utf-8" />
@@ -223,9 +223,11 @@
   <section id="lokality" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <div>
+        <div class="flex items-baseline gap-3">
           <h2 class="text-2xl sm:text-3xl font-black">Lokality</h2>
-          <p class="mt-1 text-slate-600 text-sm">Vyhledej město, ulici nebo část města. (Až bude 100+ míst, pořád to zůstane přehledné.)</p>
+          <div class="text-sm sm:text-base font-semibold text-slate-500">
+            <span id="lokalityVisible">6</span> z <span id="lokalityTotal">6</span>
+          </div>
         </div>
         <a href="#objednat" class="hidden sm:inline-flex px-4 py-2 rounded-xl bg-brand-600 text-white">Objednat</a>
       </div>
@@ -239,10 +241,7 @@
           <input id="lokalitySearch" type="search" autocomplete="off" placeholder="Hledej: Praha, Brno, Masarykova, Zlín…" class="w-full pl-11 pr-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-brand-600 bg-white" />
         </div>
         <button id="lokalityClear" type="button" class="px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-medium">Zobrazit vše</button>
-        <div class="text-sm text-slate-600 sm:text-right">
-          <div class="font-medium"><span id="lokalityCount">6</span> výsledků</div>
-          <div class="text-xs text-slate-400">Tip: ESC vymaže hledání</div>
-        </div>
+        
       </div>
 
       <div id="lokalityGrid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -643,7 +642,8 @@
     const lokSearch = document.getElementById('lokalitySearch');
     const lokClear = document.getElementById('lokalityClear');
     const lokCards = Array.from(document.querySelectorAll('.lokalita-card'));
-    const lokCount = document.getElementById('lokalityCount');
+    const lokVisible = document.getElementById('lokalityVisible');
+    const lokTotal = document.getElementById('lokalityTotal');
     const lokEmpty = document.getElementById('lokalityEmpty');
 
     function normalizeStr(s) {
@@ -664,7 +664,8 @@
         if (match) visible++;
       });
 
-      if (lokCount) lokCount.textContent = String(visible);
+      if (lokVisible) lokVisible.textContent = String(visible);
+      if (lokTotal) lokTotal.textContent = String(lokCards.length);
       if (lokEmpty) lokEmpty.classList.toggle('hidden', visible !== 0);
     }
 
