@@ -1047,7 +1047,7 @@
     </div>
   </section>
 
-  <!-- Objednávka / Lead form -->
+  <!-- Nezávazná poptávka -->
   <section id="objednat" class="py-16">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="p-6 sm:p-8 rounded-3xl border bg-white shadow-soft">
@@ -1067,16 +1067,46 @@
             <input type="tel" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="+420 777 000 000" />
           </div>
           <div>
-            <label class="block text-sm text-slate-600">Preferovaná lokalita</label>
-            <select id="lokalitaSelect" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600">
-              <option value="Praha 1, Na Příkopě 15">Praha 1</option>
-              <option value="Brno-střed, Masarykova 3">Brno-střed</option>
-              <option value="Ostrava, Nádražní 28">Ostrava</option>
-              <option value="Plzeň, Americká 15">Plzeň</option>
-              <option value="Zlín, tř. T. Bati 123">Zlín</option>
-              <option value="Liberec, Pražská 12">Liberec</option>
-            </select>
-          </div>
+  <label class="block text-sm text-slate-600 mb-2">Preferovaná lokalita</label>
+
+  <div class="relative" id="customSelectWrap">
+    <button type="button" id="customSelectBtn"
+      class="w-full flex items-center justify-between rounded-2xl border border-slate-300 bg-white px-4 py-3 text-left text-slate-900 shadow-sm transition hover:border-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100 focus:outline-none">
+      <span id="customSelectValue">Praha 1</span>
+      <svg id="customSelectArrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
+        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+        stroke-linecap="round" stroke-linejoin="round"
+        class="text-slate-400 transition">
+        <path d="m6 9 6 6 6-6"/>
+      </svg>
+    </button>
+
+    <div id="customSelectMenu"
+      class="absolute left-0 right-0 top-[calc(100%+10px)] z-30 hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl">
+
+      <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+        data-value="Praha 1" data-address="Praha 1, Na Příkopě 15">Praha 1</button>
+
+      <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+        data-value="Brno-střed" data-address="Brno-střed, Masarykova 3">Brno-střed</button>
+
+      <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+        data-value="Ostrava" data-address="Ostrava, Nádražní 28">Ostrava</button>
+
+      <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+        data-value="Plzeň" data-address="Plzeň, Americká 15">Plzeň</button>
+
+      <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+        data-value="Zlín" data-address="Zlín, tř. T. Bati 123">Zlín</button>
+
+      <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+        data-value="Liberec" data-address="Liberec, Pražská 12">Liberec</button>
+    </div>
+
+    <!-- skrytá hodnota pro JS -->
+    <input type="hidden" id="lokalitaSelect" value="Praha 1, Na Příkopě 15">
+  </div>
+</div>
 
           <!-- Mapa + info (na desktopu vedle sebe) -->
           <div class="sm:col-span-2">
