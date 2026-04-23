@@ -8,8 +8,7 @@
   <meta name="theme-color" content="#0ea5e9">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Favicon / Icons (robust) -->
-  <!-- DŮLEŽITÉ: používám relativní cesty (bez úvodního /), aby to fungovalo i na GitHub Pages v podadresáři -->
+
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="favicon-32.svg">
   <link rel="icon" type="image/svg+xml" sizes="32x32" href="favicon-32.svg">
@@ -19,12 +18,10 @@
   <link rel="icon" type="image/svg+xml" sizes="512x512" href="android-chrome-512.svg">
   <link rel="manifest" href="manifest.webmanifest">
 
-  <!-- Google Fonts (CZ diakritika) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
     tailwind.config = {
@@ -41,21 +38,18 @@
       }
     }
   </script>
+
   <style>
-  html{scroll-behavior:smooth}
+    html{scroll-behavior:smooth}
+    body { caret-color: transparent; }
+    input, textarea, select { caret-color: #0ea5e9; }
+  </style>
 
-  /* Kurzory – blikání jen tam, kde se píše */
-  body { caret-color: transparent; }
-  input, textarea, select { caret-color: #0ea5e9; }
-</style>
-
-  <!-- Open Graph -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Adresao.cz – virtuální adresa, sídlo firmy a správa pošty" />
   <meta property="og:description" content="Virtuální sídlo, přebírání a sken pošty, přeposílání, zasedačky. Praha, Brno, Ostrava a další lokality. Online objednávka do 5 minut." />
   <meta property="og:image" content="og-image.jpg" />
 
-  <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -75,13 +69,12 @@
   }
   </script>
 </head>
+
 <body class="font-sans text-slate-900 bg-gradient-to-b from-white to-slate-50">
-  <!-- Top bar -->
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <a href="#home" class="flex items-center gap-3">
-          <!-- Moderní SVG logo AO -->
           <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="rounded-xl shadow-soft">
             <defs>
               <linearGradient id="aoGrad" x1="0" y1="0" x2="1" y2="1">
@@ -95,6 +88,7 @@
           </svg>
           <span class="font-black tracking-tight text-lg">Adresao<span class="text-brand-600">.cz</span></span>
         </a>
+
         <nav class="hidden md:flex items-center gap-6 text-sm">
           <a href="#sluzby" class="hover:text-brand-700">Služby</a>
           <a href="lokality.html" class="hover:text-brand-700">Lokality</a>
@@ -103,16 +97,21 @@
           <a href="#faq" class="hover:text-brand-700">FAQ</a>
           <a href="#kontakt" class="hover:text-brand-700">Kontakt</a>
         </nav>
+
         <div class="hidden md:flex items-center gap-3">
           <a href="#objednat" class="px-4 py-2 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 shadow-soft">Objednat</a>
         </div>
-        <!-- Mobile menu button -->
+
         <button id="menuBtn" class="md:hidden inline-flex items-center justify-center p-2 rounded-lg border border-slate-200" aria-label="Otevřít menu" aria-controls="mobileNav" aria-expanded="false">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
         </button>
       </div>
     </div>
-    <!-- Mobile panel -->
+
     <div id="mobileNav" class="md:hidden hidden border-t border-slate-200 bg-white">
       <div class="px-4 py-3 grid gap-3 text-sm">
         <a class="block" href="#sluzby">Služby</a>
@@ -123,7 +122,6 @@
         <a class="block" href="#kontakt">Kontakt</a>
         <a class="block px-4 py-2 mt-1 rounded-xl bg-brand-600 text-white font-medium text-center" href="#objednat">Objednat</a>
 
-        <!-- Sociální sítě (mobil – v menu) -->
         <div class="pt-3 mt-2 border-t border-slate-200 flex items-center justify-center gap-3">
           <a href="https://www.facebook.com/adresao" target="_blank" rel="noopener" aria-label="Facebook" class="w-10 h-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-brand-50 hover:border-brand-300 transition">
             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" class="text-slate-600 hover:text-brand-700"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.3 0-1.7.8-1.7 1.6V12H17l-.4 3h-2.7v7A10 10 0 0 0 22 12z"/></svg>
@@ -139,7 +137,6 @@
     </div>
   </header>
 
-  <!-- Hero -->
   <section id="home" class="relative overflow-hidden">
     <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,.12),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(14,165,233,.12),transparent_50%)]"></div>
     <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
@@ -196,7 +193,6 @@
     </div>
   </section>
 
-  <!-- Služby -->
   <section id="sluzby" class="py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-3 gap-6">
@@ -206,13 +202,14 @@
         </div>
         <div class="p-6 rounded-3xl border bg-brand-50/60 shadow-soft">
           <h3 class="text-xl font-bold">Přebírání a sken pošty</h3>
-          <p class="mt-2 text-slate-600">Denní příjem, evidence a notifikace e‑mailem. Volitelně sken PDF a přeposílání kamkoliv v EU.</p>
+          <p class="mt-2 text-slate-600">Denní příjem, evidence a notifikace e-mailem. Volitelně sken PDF a přeposílání kamkoliv v EU.</p>
         </div>
         <div class="p-6 rounded-3xl border bg-brand-50/60 shadow-soft">
           <h3 class="text-xl font-bold">Kanceláře a zasedačky</h3>
-          <p class="mt-2 text-slate-600">Krátkodobé pronájmy na hodiny/dny. Recepce, Wi‑Fi, tisk, káva. Rezervace online.</p>
+          <p class="mt-2 text-slate-600">Krátkodobé pronájmy na hodiny/dny. Recepce, Wi-Fi, tisk, káva. Rezervace online.</p>
         </div>
       </div>
+
       <div class="grid lg:grid-cols-4 gap-6 mt-6">
         <div class="group p-6 rounded-3xl border bg-gradient-to-br from-white to-brand-50/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
           <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-100 text-brand-700 font-bold mb-3">SR</div>
@@ -238,7 +235,6 @@
     </div>
   </section>
 
-  <!-- Lokality -->
   <section id="lokality" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
@@ -251,7 +247,6 @@
         <a href="#objednat" class="hidden sm:inline-flex px-4 py-2 rounded-xl bg-brand-600 text-white">Objednat</a>
       </div>
 
-      <!-- Vyhledávač lokalit -->
       <div class="mt-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
         <div class="relative flex-1">
           <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
@@ -260,11 +255,9 @@
           <input id="lokalitySearch" type="search" autocomplete="off" placeholder="Hledej: Praha, Brno, Masarykova, Zlín…" class="w-full pl-11 pr-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-brand-600 bg-white" />
         </div>
         <button id="lokalityClear" type="button" class="px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-medium">Zobrazit vše</button>
-        
       </div>
 
       <div id="lokalityGrid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card template -->
         <div class="lokalita-card p-5 rounded-3xl border bg-slate-50" data-search="praha 1 na příkopě 15 praha">
           <div class="text-xs text-slate-500">Praha 1</div>
           <div class="mt-1 font-bold text-lg">Na Příkopě 15</div>
@@ -279,7 +272,7 @@
           <div class="mt-1 font-bold text-lg">Masarykova 3</div>
           <ul class="mt-2 text-sm text-slate-600 list-disc list-inside">
             <li>Souhlas vlastníka v ceně</li>
-            <li>Notifikace e‑mailem</li>
+            <li>Notifikace e-mailem</li>
             <li>Coworking</li>
           </ul>
         </div>
@@ -315,7 +308,7 @@
           <div class="mt-1 font-bold text-lg">Pražská 12</div>
           <ul class="mt-2 text-sm text-slate-600 list-disc list-inside">
             <li>Sken pošty do 24 h</li>
-            <li>Notifikace SMS/e‑mail</li>
+            <li>Notifikace SMS/e-mail</li>
             <li>Převzetí balíků</li>
           </ul>
         </div>
@@ -328,12 +321,10 @@
     </div>
   </section>
 
-  <!-- Ceník -->
   <section id="cenik" class="py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl sm:text-3xl font-black">Ceník</h2>
       <div class="mt-6 grid md:grid-cols-3 gap-6">
-        <!-- Plan 1 -->
         <div class="p-6 rounded-3xl border bg-white shadow-soft flex flex-col">
           <h3 class="text-xl font-bold">Start</h3>
           <p class="mt-1 text-slate-600">Pro OSVČ a malé projekty</p>
@@ -347,7 +338,6 @@
           </ul>
           <a href="#objednat" class="mt-6 px-4 py-2 text-center rounded-xl bg-brand-600 text-white hover:bg-brand-700">Vybrat</a>
         </div>
-        <!-- Plan 2 -->
         <div class="p-6 rounded-3xl border-2 border-brand-600 bg-white shadow-soft flex flex-col">
           <div class="self-start px-2 py-1 -mt-3 mb-3 rounded-md bg-brand-100 text-brand-700 text-xs font-bold">Nejoblíbenější</div>
           <h3 class="text-xl font-bold">Business</h3>
@@ -356,12 +346,11 @@
           <ul class="mt-4 text-sm text-slate-700 space-y-2">
             <li>✔ Vše ze Start</li>
             <li>✔ Sken pošty do 24 h</li>
-            <li>✔ Notifikace e‑mailem</li>
+            <li>✔ Notifikace e-mailem</li>
             <li>✔ 1× měsíčně přeposílání</li>
           </ul>
           <a href="#objednat" class="mt-6 px-4 py-2 text-center rounded-xl bg-brand-600 text-white hover:bg-brand-700">Vybrat</a>
         </div>
-        <!-- Plan 3 -->
         <div class="p-6 rounded-3xl border bg-white shadow-soft flex flex-col">
           <h3 class="text-xl font-bold">Premium</h3>
           <p class="mt-1 text-slate-600">Maximální pohodlí</p>
@@ -379,7 +368,6 @@
     </div>
   </section>
 
-  <!-- Jak to funguje -->
   <section id="jaktofunguje" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl sm:text-3xl font-black">Jak to funguje</h2>
@@ -416,42 +404,74 @@
     </div>
   </section>
 
-  <!-- Objednávka / Lead form -->
   <section id="objednat" class="py-16">
     <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="p-6 sm:p-8 rounded-3xl border bg-white shadow-soft">
         <h2 class="text-2xl sm:text-3xl font-black">Nezávazná poptávka</h2>
         <p class="mt-1 text-slate-600">Vyplňte pár údajů a ozveme se do 24 hodin.</p>
+
         <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4" onsubmit="event.preventDefault(); window.location.href='dekuji.html';">
           <div>
             <label class="block text-sm text-slate-600">Jméno a příjmení</label>
             <input type="text" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Jan Novák" />
           </div>
+
           <div>
-            <label class="block text-sm text-slate-600">E‑mail</label>
+            <label class="block text-sm text-slate-600">E-mail</label>
             <input type="email" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="jan@firma.cz" />
           </div>
+
           <div>
             <label class="block text-sm text-slate-600">Telefon</label>
             <input type="tel" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="+420 777 000 000" />
           </div>
+
           <div>
-            <label class="block text-sm text-slate-600">Preferovaná lokalita</label>
-            <select id="lokalitaSelect" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600">
-              <option value="Praha 1, Na Příkopě 15">Praha 1</option>
-              <option value="Brno-střed, Masarykova 3">Brno-střed</option>
-              <option value="Ostrava, Nádražní 28">Ostrava</option>
-              <option value="Plzeň, Americká 15">Plzeň</option>
-              <option value="Zlín, tř. T. Bati 123">Zlín</option>
-              <option value="Liberec, Pražská 12">Liberec</option>
-            </select>
+            <label class="block text-sm text-slate-600 mb-2">Preferovaná lokalita</label>
+
+            <div class="relative" id="customSelectWrap">
+              <button
+                type="button"
+                id="customSelectBtn"
+                class="w-full h-12 flex items-center justify-between rounded-2xl border border-slate-300 bg-white px-4 text-left text-slate-900 shadow-sm transition hover:border-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100 focus:outline-none"
+              >
+                <span id="customSelectValue">Praha 1</span>
+
+                <svg
+                  id="customSelectArrow"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  class="text-slate-400 transition"
+                >
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </button>
+
+              <div
+                id="customSelectMenu"
+                class="absolute left-0 right-0 top-[calc(100%+10px)] z-30 hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl"
+              >
+                <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50" data-value="Praha 1" data-address="Praha 1, Na Příkopě 15">Praha 1</button>
+                <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50" data-value="Brno-střed" data-address="Brno-střed, Masarykova 3">Brno-střed</button>
+                <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50" data-value="Ostrava" data-address="Ostrava, Nádražní 28">Ostrava</button>
+                <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50" data-value="Plzeň" data-address="Plzeň, Americká 15">Plzeň</button>
+                <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50" data-value="Zlín" data-address="Zlín, tř. T. Bati 123">Zlín</button>
+                <button type="button" class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50" data-value="Liberec" data-address="Liberec, Pražská 12">Liberec</button>
+              </div>
+
+              <input type="hidden" id="lokalitaSelect" value="Praha 1, Na Příkopě 15">
+            </div>
           </div>
 
-          <!-- Mapa + info (na desktopu vedle sebe) -->
           <div class="sm:col-span-2">
             <div class="mt-6 grid lg:grid-cols-2 lg:gap-8 items-stretch">
-              
-              <!-- MAPA – modern tech styl -->
               <div class="relative group">
                 <div class="absolute -inset-1 bg-gradient-to-r from-brand-500/25 to-brand-700/25 rounded-3xl blur opacity-60 group-hover:opacity-80 transition"></div>
                 <div class="relative h-72 lg:h-96 rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-xl">
@@ -466,7 +486,6 @@
                 </div>
               </div>
 
-              <!-- INFO PANEL – glass card -->
               <div class="mt-6 lg:mt-0 p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200 shadow-xl space-y-6">
                 <div>
                   <div class="text-xs uppercase tracking-wider text-slate-500">Vybraná lokalita</div>
@@ -480,12 +499,10 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row gap-3">
-                  <a id="openMapsLink" target="_blank" rel="noopener"
-                     class="flex-1 text-center px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-medium">
+                  <a id="openMapsLink" target="_blank" rel="noopener" class="flex-1 text-center px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-medium">
                     Otevřít v Mapách
                   </a>
-                  <a id="streetViewLink" target="_blank" rel="noopener"
-                     class="flex-1 text-center px-4 py-3 rounded-2xl bg-slate-900 text-white hover:opacity-90 font-medium">
+                  <a id="streetViewLink" target="_blank" rel="noopener" class="flex-1 text-center px-4 py-3 rounded-2xl bg-slate-900 text-white hover:opacity-90 font-medium">
                     Street View
                   </a>
                 </div>
@@ -494,7 +511,6 @@
                   Moderní reprezentativní adresa vhodná pro obchodní rejstřík i image firmy.
                 </div>
               </div>
-
             </div>
           </div>
 
@@ -502,10 +518,12 @@
             <label class="block text-sm text-slate-600">Poznámka</label>
             <textarea rows="4" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Napište, co přesně potřebujete…"></textarea>
           </div>
+
           <div class="sm:col-span-2 flex items-start gap-2 text-sm">
             <input id="gdpr" type="checkbox" required class="mt-1 rounded border-slate-300 text-brand-600 focus:ring-brand-600" />
             <label for="gdpr">Souhlasím se zpracováním osobních údajů pro účely poptávky.</label>
           </div>
+
           <div class="sm:col-span-2">
             <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700">Odeslat poptávku</button>
           </div>
@@ -514,7 +532,6 @@
     </div>
   </section>
 
-  <!-- FAQ -->
   <section id="faq" class="py-16 bg-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <h2 class="text-2xl sm:text-3xl font-black">Časté dotazy</h2>
@@ -539,7 +556,6 @@
     </div>
   </section>
 
-  <!-- Kontakt -->
   <section id="kontakt" class="py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid lg:grid-cols-3 gap-6">
@@ -547,7 +563,7 @@
           <h2 class="text-2xl sm:text-3xl font-black">Kontakt</h2>
           <div class="mt-4 grid sm:grid-cols-2 gap-4 text-slate-700">
             <div>
-              <div class="text-sm text-slate-500">E‑mail</div>
+              <div class="text-sm text-slate-500">E-mail</div>
               <a href="mailto:info@adresao.cz" class="font-medium">info@adresao.cz</a>
             </div>
             <div>
@@ -564,6 +580,7 @@
             </div>
           </div>
         </div>
+
         <div class="p-6 rounded-3xl border bg-white shadow-soft">
           <h3 class="font-bold">Propojení AO ekosystému</h3>
           <ul class="mt-2 text-slate-700 space-y-2 text-sm">
@@ -596,9 +613,8 @@
       <div>
         <div class="font-semibold">Důležité</div>
         <ul class="mt-2 space-y-1 text-slate-600">
-                    <li><a href="obchodni-podminky.html" class="hover:text-brand-700">Obchodní podmínky</a></li>
+          <li><a href="obchodni-podminky.html" class="hover:text-brand-700">Obchodní podmínky</a></li>
           <li><a href="gdpr.html" class="hover:text-brand-700">GDPR</a></li>
-          
           <li><a href="lokality.html" class="hover:text-brand-700">Lokality</a></li>
         </ul>
       </div>
@@ -609,9 +625,9 @@
           <li><a href="tel:+420777000000" class="hover:text-brand-700">+420 000 000 000</a></li>
           <li><a href="prihlaseni.html" class="hover:text-brand-700">Přihlášení</a></li>
         </ul>
-
-        </div>
+      </div>
     </div>
+
     <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-xs text-slate-500 pb-8">
       <div>© <span id="year"></span> Adresao.cz • Všechna práva vyhrazena.</div>
       <div class="flex items-center gap-3">
@@ -626,910 +642,119 @@
         </a>
       </div>
     </div>
-      <!-- Silueta České republiky – externí asset --> <img src="cz-outline.png" alt="Obrys České republiky" class="absolute bottom-0 right-0 w-80 md:w-[560px] opacity-10 text-brand-600 pointer-events-none" /> </footer>
+
+    <img src="cz-outline.png" alt="Obrys České republiky" class="absolute bottom-0 right-0 w-80 md:w-[560px] opacity-10 pointer-events-none" />
+  </footer>
 
   <script>
-    <!doctype html>
-<html lang="cs">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Adresao.cz • virtuální adresa, sídlo firmy a správa pošty v ČR</title>
-  <meta name="description" content="Virtuální adresa a oficiální sídlo firmy v Praze, Brně, Ostravě a dalších městech. Přebírání a sken pošty, přeposílání, krátkodobé kanceláře, zasedačky. Rychle, legálně, bez starostí." />
-  <meta name="theme-color" content="#0ea5e9">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <!-- Favicon / Icons (robust) -->
-  <!-- DŮLEŽITÉ: používám relativní cesty (bez úvodního /), aby to fungovalo i na GitHub Pages v podadresáři -->
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="favicon-32.svg">
-  <link rel="icon" type="image/svg+xml" sizes="32x32" href="favicon-32.svg">
-  <link rel="icon" type="image/svg+xml" sizes="16x16" href="favicon-16.svg">
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.svg">
-  <link rel="icon" type="image/svg+xml" sizes="192x192" href="android-chrome-192.svg">
-  <link rel="icon" type="image/svg+xml" sizes="512x512" href="android-chrome-512.svg">
-  <link rel="manifest" href="manifest.webmanifest">
+    const wrap = document.getElementById('customSelectWrap');
+    const btnSelect = document.getElementById('customSelectBtn');
+    const menu = document.getElementById('customSelectMenu');
+    const value = document.getElementById('customSelectValue');
+    const arrow = document.getElementById('customSelectArrow');
+    const options = document.querySelectorAll('.custom-option');
+    const hiddenInput = document.getElementById('lokalitaSelect');
 
-  <!-- Google Fonts (CZ diakritika) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
+    const btn = document.getElementById('menuBtn');
+    const nav = document.getElementById('mobileNav');
 
-  <!-- Tailwind CSS CDN -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: { sans: ['Roboto','ui-sans-serif','system-ui'] },
-          colors: {
-            brand: {
-              50:'#eef9ff',100:'#d9f1ff',200:'#b0e1ff',300:'#7fd0ff',400:'#47bdff',500:'#0ea5e9',600:'#068dcd',700:'#0870a3',800:'#0a567f',900:'#0b496a'
-            }
-          },
-          boxShadow: { soft: '0 10px 30px rgba(2,6,23,.08)'}
-        }
+    btn?.addEventListener('click', () => {
+      nav.classList.toggle('hidden');
+      btn.setAttribute('aria-expanded', String(!nav.classList.contains('hidden')));
+    });
+
+    nav?.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => {
+        nav.classList.add('hidden');
+        btn.setAttribute('aria-expanded', 'false');
+      });
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const mapFrame = document.getElementById('googleMap');
+    const selectedAddressEl = document.getElementById('selectedAddress');
+    const openMapsLink = document.getElementById('openMapsLink');
+    const streetViewLink = document.getElementById('streetViewLink');
+
+    function updateMap(addressRaw) {
+      const address = encodeURIComponent(addressRaw);
+      if (mapFrame) mapFrame.src = `https://www.google.com/maps?q=${address}&output=embed`;
+      if (selectedAddressEl) selectedAddressEl.textContent = addressRaw;
+      if (openMapsLink) openMapsLink.href = `https://www.google.com/maps/search/?api=1&query=${address}`;
+      if (streetViewLink) streetViewLink.href = `https://www.google.com/maps?layer=c&q=${address}`;
+    }
+
+    if (hiddenInput?.value) updateMap(hiddenInput.value);
+
+    btnSelect?.addEventListener('click', () => {
+      menu.classList.toggle('hidden');
+      arrow.classList.toggle('rotate-180');
+    });
+
+    options.forEach((opt) => {
+      opt.addEventListener('click', () => {
+        value.textContent = opt.dataset.value;
+        hiddenInput.value = opt.dataset.address;
+        menu.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
+        updateMap(opt.dataset.address);
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (wrap && !wrap.contains(e.target)) {
+        menu.classList.add('hidden');
+        arrow.classList.remove('rotate-180');
       }
-    }
-  </script>
-  <style>
-  html{scroll-behavior:smooth}
-
-  /* Kurzory – blikání jen tam, kde se píše */
-  body { caret-color: transparent; }
-  input, textarea, select { caret-color: #0ea5e9; }
-</style>
-
-  <!-- Open Graph -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="Adresao.cz – virtuální adresa, sídlo firmy a správa pošty" />
-  <meta property="og:description" content="Virtuální sídlo, přebírání a sken pošty, přeposílání, zasedačky. Praha, Brno, Ostrava a další lokality. Online objednávka do 5 minut." />
-  <meta property="og:image" content="og-image.jpg" />
-
-  <!-- Schema.org JSON-LD -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Adresao.cz",
-    "url": "https://www.adresao.cz",
-    "logo": "https://www.adresao.cz/logo.svg",
-    "sameAs": ["https://www.facebook.com/adresao", "https://www.instagram.com/adresao", "https://www.youtube.com/@adresao"],
-    "offers": {
-      "@type": "Offer",
-      "name": "Virtuální adresa – sídlo firmy",
-      "priceCurrency": "CZK",
-      "price": "99",
-      "description": "Oficiální sídlo firmy + přebírání pošty",
-      "availability": "https://schema.org/InStock"
-    }
-  }
-  </script>
-</head>
-<body class="font-sans text-slate-900 bg-gradient-to-b from-white to-slate-50">
-  <!-- Top bar -->
-  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-slate-200">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex h-16 items-center justify-between">
-        <a href="#home" class="flex items-center gap-3">
-          <!-- Moderní SVG logo AO -->
-          <svg width="38" height="38" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" class="rounded-xl shadow-soft">
-            <defs>
-              <linearGradient id="aoGrad" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0%" stop-color="#0ea5e9"/>
-                <stop offset="100%" stop-color="#0870a3"/>
-              </linearGradient>
-            </defs>
-            <rect width="100" height="100" rx="24" fill="url(#aoGrad)"/>
-            <path d="M30 70 L45 30 L60 70" stroke="white" stroke-width="8" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-            <circle cx="70" cy="50" r="18" stroke="white" stroke-width="8" fill="none"/>
-          </svg>
-          <span class="font-black tracking-tight text-lg">Adresao<span class="text-brand-600">.cz</span></span>
-        </a>
-        <nav class="hidden md:flex items-center gap-6 text-sm">
-          <a href="#sluzby" class="hover:text-brand-700">Služby</a>
-          <a href="lokality.html" class="hover:text-brand-700">Lokality</a>
-          <a href="#cenik" class="hover:text-brand-700">Ceník</a>
-          <a href="#jaktofunguje" class="hover:text-brand-700">Jak to funguje</a>
-          <a href="#faq" class="hover:text-brand-700">FAQ</a>
-          <a href="#kontakt" class="hover:text-brand-700">Kontakt</a>
-        </nav>
-        <div class="hidden md:flex items-center gap-3">
-          <a href="#objednat" class="px-4 py-2 rounded-xl bg-brand-600 text-white font-medium hover:bg-brand-700 shadow-soft">Objednat</a>
-        </div>
-        <!-- Mobile menu button -->
-        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center p-2 rounded-lg border border-slate-200" aria-label="Otevřít menu" aria-controls="mobileNav" aria-expanded="false">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
-        </button>
-      </div>
-    </div>
-    <!-- Mobile panel -->
-    <div id="mobileNav" class="md:hidden hidden border-t border-slate-200 bg-white">
-      <div class="px-4 py-3 grid gap-3 text-sm">
-        <a class="block" href="#sluzby">Služby</a>
-        <a class="block" href="lokality.html">Lokality</a>
-        <a class="block" href="#cenik">Ceník</a>
-        <a class="block" href="#jaktofunguje">Jak to funguje</a>
-        <a class="block" href="#faq">FAQ</a>
-        <a class="block" href="#kontakt">Kontakt</a>
-        <a class="block px-4 py-2 mt-1 rounded-xl bg-brand-600 text-white font-medium text-center" href="#objednat">Objednat</a>
-
-        <!-- Sociální sítě (mobil – v menu) -->
-        <div class="pt-3 mt-2 border-t border-slate-200 flex items-center justify-center gap-3">
-          <a href="https://www.facebook.com/adresao" target="_blank" rel="noopener" aria-label="Facebook" class="w-10 h-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-brand-50 hover:border-brand-300 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" class="text-slate-600 hover:text-brand-700"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.3 0-1.7.8-1.7 1.6V12H17l-.4 3h-2.7v7A10 10 0 0 0 22 12z"/></svg>
-          </a>
-          <a href="https://www.instagram.com/adresao" target="_blank" rel="noopener" aria-label="Instagram" class="w-10 h-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-brand-50 hover:border-brand-300 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" class="text-slate-600 hover:text-brand-700"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 5.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2zm6-1.3a1.2 1.2 0 1 1-1.2 1.2A1.2 1.2 0 0 1 18 5.9z"/></svg>
-          </a>
-          <a href="https://www.youtube.com/@adresao" target="_blank" rel="noopener" aria-label="YouTube" class="w-10 h-10 flex items-center justify-center rounded-xl border border-slate-200 bg-white hover:bg-brand-50 hover:border-brand-300 transition">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 24 24" class="text-slate-600 hover:text-brand-700"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.4.6A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.7.6 9.4.6 9.4.6s7.7 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8zM9.8 15.5v-7l6.2 3.5-6.2 3.5z"/></svg>
-          </a>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- Hero -->
-  <section id="home" class="relative overflow-hidden">
-    <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,rgba(14,165,233,.12),transparent_50%),radial-gradient(ellipse_at_bottom_left,rgba(14,165,233,.12),transparent_50%)]"></div>
-    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 lg:py-24 grid lg:grid-cols-2 gap-10 items-center">
-      <div>
-        <h1 class="text-4xl sm:text-5xl font-black tracking-tight leading-tight">Virtuální adresa pro firmy <span class="text-brand-600">od 99 Kč/měs.</span></h1>
-        <p class="mt-4 text-slate-700 text-lg">Oficiální sídlo, přebírání a sken pošty, přeposílání zásilek, krátkodobé kanceláře a zasedačky. Rychle, legálně, bez starostí.</p>
-        <div class="mt-6 flex flex-col sm:flex-row gap-3">
-          <a href="#objednat" class="px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700 shadow-soft">Založit virtuální adresu</a>
-          <a href="#cenik" class="px-6 py-3 rounded-2xl border border-slate-300 bg-white hover:bg-slate-50">Podívat se na ceník</a>
-        </div>
-        <div class="mt-6 flex items-center gap-4 text-sm text-slate-600">
-          <div class="flex items-center gap-2"><span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span> Aktivace do 24 h</div>
-          <div class="flex items-center gap-2"><span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span> Smlouva online</div>
-          <div class="flex items-center gap-2"><span class="inline-block h-2 w-2 rounded-full bg-emerald-500"></span> Legální pro rejstřík</div>
-        </div>
-      </div>
-      <div>
-        <div class="relative rounded-3xl border border-slate-200 bg-white p-4 sm:p-6 shadow-soft">
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-            <div class="p-4 rounded-2xl border bg-slate-50">
-              <div class="text-xs text-slate-500">Praha 1</div>
-              <div class="font-bold">Na Příkopě 15</div>
-              <div class="text-sm text-slate-600">od 149 Kč</div>
-            </div>
-            <div class="p-4 rounded-2xl border bg-slate-50">
-              <div class="text-xs text-slate-500">Brno-střed</div>
-              <div class="font-bold">Masarykova 3</div>
-              <div class="text-sm text-slate-600">od 129 Kč</div>
-            </div>
-            <div class="p-4 rounded-2xl border bg-slate-50">
-              <div class="text-xs text-slate-500">Ostrava</div>
-              <div class="font-bold">Nádražní 28</div>
-              <div class="text-sm text-slate-600">od 119 Kč</div>
-            </div>
-            <div class="p-4 rounded-2xl border bg-slate-50">
-              <div class="text-xs text-slate-500">Plzeň</div>
-              <div class="font-bold">Americká 15</div>
-              <div class="text-sm text-slate-600">od 109 Kč</div>
-            </div>
-            <div class="p-4 rounded-2xl border bg-slate-50">
-              <div class="text-xs text-slate-500">Zlín</div>
-              <div class="font-bold">tř. T. Bati 123</div>
-              <div class="text-sm text-slate-600">od 99 Kč</div>
-            </div>
-            <div class="p-4 rounded-2xl border bg-slate-50">
-              <div class="text-xs text-slate-500">Liberec</div>
-              <div class="font-bold">Pražská 12</div>
-              <div class="text-sm text-slate-600">od 109 Kč</div>
-            </div>
-          </div>
-          <div class="mt-3 text-xs text-slate-500">*Ceny orientační – nastavíme dle reálné nabídky.</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Služby -->
-  <section id="sluzby" class="py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-3 gap-6">
-        <div class="p-6 rounded-3xl border bg-brand-50/60 shadow-soft">
-          <h3 class="text-xl font-bold">Virtuální adresa / sídlo firmy</h3>
-          <p class="mt-2 text-slate-600">Oficiální adresa pro obchodní rejstřík nebo živnostenské podnikání. Zajištěné označení, souhlas vlastníka, dokumentace.</p>
-        </div>
-        <div class="p-6 rounded-3xl border bg-brand-50/60 shadow-soft">
-          <h3 class="text-xl font-bold">Přebírání a sken pošty</h3>
-          <p class="mt-2 text-slate-600">Denní příjem, evidence a notifikace e‑mailem. Volitelně sken PDF a přeposílání kamkoliv v EU.</p>
-        </div>
-        <div class="p-6 rounded-3xl border bg-brand-50/60 shadow-soft">
-          <h3 class="text-xl font-bold">Kanceláře a zasedačky</h3>
-          <p class="mt-2 text-slate-600">Krátkodobé pronájmy na hodiny/dny. Recepce, Wi‑Fi, tisk, káva. Rezervace online.</p>
-        </div>
-      </div>
-      <div class="grid lg:grid-cols-4 gap-6 mt-6">
-        <div class="group p-6 rounded-3xl border bg-gradient-to-br from-white to-brand-50/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-          <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-100 text-brand-700 font-bold mb-3">SR</div>
-          <h4 class="font-semibold text-lg">Založení s.r.o.</h4>
-          <p class="text-slate-600 mt-1">Na klíč ve spolupráci s notářem a účetní.</p>
-        </div>
-        <div class="group p-6 rounded-3xl border bg-gradient-to-br from-white to-brand-50/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-          <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-100 text-brand-700 font-bold mb-3">VR</div>
-          <h4 class="font-semibold text-lg">Virtuální recepce</h4>
-          <p class="text-slate-600 mt-1">Telefonní linka, přepojování, skripty.</p>
-        </div>
-        <div class="group p-6 rounded-3xl border bg-gradient-to-br from-white to-brand-50/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-          <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-100 text-brand-700 font-bold mb-3">CW</div>
-          <h4 class="font-semibold text-lg">Coworking</h4>
-          <p class="text-slate-600 mt-1">Flexi stoly, meeting boxy, tisk.</p>
-        </div>
-        <div class="group p-6 rounded-3xl border bg-gradient-to-br from-white to-brand-50/40 hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
-          <div class="w-10 h-10 flex items-center justify-center rounded-xl bg-brand-100 text-brand-700 font-bold mb-3">+</div>
-          <h4 class="font-semibold text-lg">Doplňky</h4>
-          <p class="text-slate-600 mt-1">Razítka, domény, web, logo (StartAO).</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Lokality -->
-  <section id="lokality" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
-        <div class="flex items-baseline gap-3">
-          <h2 class="text-2xl sm:text-3xl font-black">Lokality</h2>
-          <div class="text-sm sm:text-base font-semibold text-slate-500">
-            <span id="lokalityVisible">6</span> z <span id="lokalityTotal">6</span>
-          </div>
-        </div>
-        <a href="#objednat" class="hidden sm:inline-flex px-4 py-2 rounded-xl bg-brand-600 text-white">Objednat</a>
-      </div>
-
-      <!-- Vyhledávač lokalit -->
-      <div class="mt-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
-        <div class="relative flex-1">
-          <span class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M17 17l-3.5-3.5"/></svg>
-          </span>
-          <input id="lokalitySearch" type="search" autocomplete="off" placeholder="Hledej: Praha, Brno, Masarykova, Zlín…" class="w-full pl-11 pr-4 py-3 rounded-2xl border border-slate-300 focus:border-brand-600 focus:ring-brand-600 bg-white" />
-        </div>
-        <button id="lokalityClear" type="button" class="px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-medium">Zobrazit vše</button>
-        
-      </div>
-
-      <div id="lokalityGrid" class="mt-6 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <!-- Card template -->
-        <div class="lokalita-card p-5 rounded-3xl border bg-slate-50" data-search="praha 1 na příkopě 15 praha">
-          <div class="text-xs text-slate-500">Praha 1</div>
-          <div class="mt-1 font-bold text-lg">Na Příkopě 15</div>
-          <ul class="mt-2 text-sm text-slate-600 list-disc list-inside">
-            <li>Rejstříkově vhodná</li>
-            <li>Příjem + sken pošty</li>
-            <li>Zasedačka na místě</li>
-          </ul>
-        </div>
-        <div class="lokalita-card p-5 rounded-3xl border bg-slate-50" data-search="brno střed masarykova 3 brno">
-          <div class="text-xs text-slate-500">Brno-střed</div>
-          <div class="mt-1 font-bold text-lg">Masarykova 3</div>
-          <ul class="mt-2 text-sm text-slate-600 list-disc list-inside">
-            <li>Souhlas vlastníka v ceně</li>
-            <li>Notifikace e‑mailem</li>
-            <li>Coworking</li>
-          </ul>
-        </div>
-        <div class="lokalita-card p-5 rounded-3xl border bg-slate-50" data-search="ostrava nádražní 28 ostrava">
-          <div class="text-xs text-slate-500">Ostrava</div>
-          <div class="mt-1 font-bold text-lg">Nádražní 28</div>
-          <ul class="mt-2 text-sm text-slate-600 list-disc list-inside">
-            <li>Přeposílání zásilek</li>
-            <li>Archivace podacích lístků</li>
-            <li>Parkování poblíž</li>
-          </ul>
-        </div>
-        <div class="lokalita-card p-5 rounded-3xl border bg-slate-50" data-search="plzeň americká 15 plzen">
-          <div class="text-xs text-slate-500">Plzeň</div>
-          <div class="mt-1 font-bold text-lg">Americká 15</div>
-          <ul class="mt-2 text-sm text-slate-600 list-disc list-inside">
-            <li>Rejstříkově vhodná</li>
-            <li>Smlouva online</li>
-            <li>Boxy na poštu</li>
-          </ul>
-        </div>
-        <div class="lokalita-card p-5 rounded-3xl border bg-slate-50" data-search="zlín tr. t. bati 123 zlin">
-          <div class="text-xs text-slate-500">Zlín</div>
-          <div class="mt-1 font-bold text-lg">tř. T. Bati 123</div>
-          <ul class="mt-2 text-sm text-slate-600 list-disc list-inside">
-            <li>Nejlevnější varianta</li>
-            <li>Fakturace měsíčně/ročně</li>
-            <li>Možnost osobního odběru</li>
-          </ul>
-        </div>
-        <div class="lokalita-card p-5 rounded-3xl border bg-slate-50" data-search="liberec pražská 12 liberec prazska">
-          <div class="text-xs text-slate-500">Liberec</div>
-          <div class="mt-1 font-bold text-lg">Pražská 12</div>
-          <ul class="mt-2 text-sm text-slate-600 list-disc list-inside">
-            <li>Sken pošty do 24 h</li>
-            <li>Notifikace SMS/e‑mail</li>
-            <li>Převzetí balíků</li>
-          </ul>
-        </div>
-      </div>
-
-      <div id="lokalityEmpty" class="hidden mt-8 p-6 rounded-3xl border bg-slate-50 text-slate-700">
-        <div class="font-bold">Nic nenalezeno</div>
-        <div class="text-sm text-slate-600 mt-1">Zkus jiný výraz (např. město nebo ulici) nebo klikni na „Zobrazit vše“.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Ceník -->
-  <section id="cenik" class="py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl sm:text-3xl font-black">Ceník</h2>
-      <div class="mt-6 grid md:grid-cols-3 gap-6">
-        <!-- Plan 1 -->
-        <div class="p-6 rounded-3xl border bg-white shadow-soft flex flex-col">
-          <h3 class="text-xl font-bold">Start</h3>
-          <p class="mt-1 text-slate-600">Pro OSVČ a malé projekty</p>
-          <div class="mt-4 text-4xl font-black">99 Kč<span class="text-base font-medium text-slate-500">/měs.</span></div>
-          <ul class="mt-4 text-sm text-slate-700 space-y-2">
-            <li>✔ Oficiální adresa</li>
-            <li>✔ Označení na budově</li>
-            <li>✔ Příjem pošty</li>
-            <li>— Sken pošty (doplněk)</li>
-            <li>— Přeposílání (doplněk)</li>
-          </ul>
-          <a href="#objednat" class="mt-6 px-4 py-2 text-center rounded-xl bg-brand-600 text-white hover:bg-brand-700">Vybrat</a>
-        </div>
-        <!-- Plan 2 -->
-        <div class="p-6 rounded-3xl border-2 border-brand-600 bg-white shadow-soft flex flex-col">
-          <div class="self-start px-2 py-1 -mt-3 mb-3 rounded-md bg-brand-100 text-brand-700 text-xs font-bold">Nejoblíbenější</div>
-          <h3 class="text-xl font-bold">Business</h3>
-          <p class="mt-1 text-slate-600">Pro rostoucí firmy</p>
-          <div class="mt-4 text-4xl font-black">199 Kč<span class="text-base font-medium text-slate-500">/měs.</span></div>
-          <ul class="mt-4 text-sm text-slate-700 space-y-2">
-            <li>✔ Vše ze Start</li>
-            <li>✔ Sken pošty do 24 h</li>
-            <li>✔ Notifikace e‑mailem</li>
-            <li>✔ 1× měsíčně přeposílání</li>
-          </ul>
-          <a href="#objednat" class="mt-6 px-4 py-2 text-center rounded-xl bg-brand-600 text-white hover:bg-brand-700">Vybrat</a>
-        </div>
-        <!-- Plan 3 -->
-        <div class="p-6 rounded-3xl border bg-white shadow-soft flex flex-col">
-          <h3 class="text-xl font-bold">Premium</h3>
-          <p class="mt-1 text-slate-600">Maximální pohodlí</p>
-          <div class="mt-4 text-4xl font-black">399 Kč<span class="text-base font-medium text-slate-500">/měs.</span></div>
-          <ul class="mt-4 text-sm text-slate-700 space-y-2">
-            <li>✔ Vše z Business</li>
-            <li>✔ Prioritní zpracování</li>
-            <li>✔ Přeposílání 4×/měs.</li>
-            <li>✔ Sleva na zasedačky</li>
-          </ul>
-          <a href="#objednat" class="mt-6 px-4 py-2 text-center rounded-xl bg-brand-600 text-white hover:bg-brand-700">Vybrat</a>
-        </div>
-      </div>
-      <div class="text-xs text-slate-500 mt-3">*Ceny jsou orientační, finální dle vybrané lokality a doplňků.</div>
-    </div>
-  </section>
-
-  <!-- Jak to funguje -->
-  <section id="jaktofunguje" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl sm:text-3xl font-black">Jak to funguje</h2>
-      <div class="mt-6 grid md:grid-cols-4 gap-6">
-        <div class="p-6 rounded-3xl border bg-slate-50">
-          <div class="flex items-center gap-3">
-            <div class="text-3xl font-black text-brand-700">1</div>
-            <h4 class="font-bold text-lg">Vyberete lokalitu</h4>
-          </div>
-          <p class="text-slate-600">Praha, Brno, Ostrava… dle potřeby a rozpočtu.</p>
-        </div>
-        <div class="p-6 rounded-3xl border bg-slate-50">
-          <div class="flex items-center gap-3">
-            <div class="text-3xl font-black text-brand-700">2</div>
-            <h4 class="font-bold text-lg">Uzavřeme smlouvu online</h4>
-          </div>
-          <p class="text-slate-600">Pošleme souhlas vlastníka a označíme schránku.</p>
-        </div>
-        <div class="p-6 rounded-3xl border bg-slate-50">
-          <div class="flex items-center gap-3">
-            <div class="text-3xl font-black text-brand-700">3</div>
-            <h4 class="font-bold text-lg">Změna v rejstříku</h4>
-          </div>
-          <p class="text-slate-600">Můžeme asistovat s podáním na OR/ŽÚ.</p>
-        </div>
-        <div class="p-6 rounded-3xl border bg-slate-50">
-          <div class="flex items-center gap-3">
-            <div class="text-3xl font-black text-brand-700">4</div>
-            <h4 class="font-bold text-lg">Správa pošty</h4>
-          </div>
-          <p class="text-slate-600">Příjem zásilek, skeny PDF, přeposílání kamkoliv.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Nezávazná poptávka -->
-<section id="objednat" class="py-16">
-  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="p-6 sm:p-8 rounded-3xl border bg-white shadow-soft">
-      <h2 class="text-2xl sm:text-3xl font-black">Nezávazná poptávka</h2>
-      <p class="mt-1 text-slate-600">Vyplňte pár údajů a ozveme se do 24 hodin.</p>
-
-      <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4" onsubmit="event.preventDefault(); window.location.href='dekuji.html';">
-        <div>
-          <label class="block text-sm text-slate-600">Jméno a příjmení</label>
-          <input type="text" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Jan Novák" />
-        </div>
-
-        <div>
-          <label class="block text-sm text-slate-600">E-mail</label>
-          <input type="email" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="jan@firma.cz" />
-        </div>
-
-        <div>
-          <label class="block text-sm text-slate-600">Telefon</label>
-          <input type="tel" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="+420 777 000 000" />
-        </div>
-
-        <div>
-          <label class="block text-sm text-slate-600 mb-2">Preferovaná lokalita</label>
-
-          <div class="relative" id="customSelectWrap">
-            <button
-              type="button"
-              id="customSelectBtn"
-              class="w-full h-12 flex items-center justify-between rounded-2xl border border-slate-300 bg-white px-4 text-left text-slate-900 shadow-sm transition hover:border-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100 focus:outline-none"
-            >
-              <span id="customSelectValue">Praha 1</span>
-
-              <svg
-                id="customSelectArrow"
-                xmlns="http://www.w3.org/2000/svg"
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2.2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                class="text-slate-400 transition"
-              >
-                <path d="m6 9 6 6 6-6"></path>
-              </svg>
-            </button>
-
-            <div
-              id="customSelectMenu"
-              class="absolute left-0 right-0 top-[calc(100%+10px)] z-30 hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl"
-            >
-              <button
-                type="button"
-                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
-                data-value="Praha 1"
-                data-address="Praha 1, Na Příkopě 15"
-              >
-                Praha 1
-              </button>
-
-              <button
-                type="button"
-                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
-                data-value="Brno-střed"
-                data-address="Brno-střed, Masarykova 3"
-              >
-                Brno-střed
-              </button>
-
-              <button
-                type="button"
-                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
-                data-value="Ostrava"
-                data-address="Ostrava, Nádražní 28"
-              >
-                Ostrava
-              </button>
-
-              <button
-                type="button"
-                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
-                data-value="Plzeň"
-                data-address="Plzeň, Americká 15"
-              >
-                Plzeň
-              </button>
-
-              <button
-                type="button"
-                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
-                data-value="Zlín"
-                data-address="Zlín, tř. T. Bati 123"
-              >
-                Zlín
-              </button>
-
-              <button
-                type="button"
-                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
-                data-value="Liberec"
-                data-address="Liberec, Pražská 12"
-              >
-                Liberec
-              </button>
-            </div>
-
-            <input type="hidden" id="lokalitaSelect" value="Praha 1, Na Příkopě 15">
-          </div>
-        </div>
-
-        <!-- Mapa + info (na desktopu vedle sebe) -->
-        <div class="sm:col-span-2">
-          <div class="mt-6 grid lg:grid-cols-2 lg:gap-8 items-stretch">
-            
-            <!-- MAPA – modern tech styl -->
-            <div class="relative group">
-              <div class="absolute -inset-1 bg-gradient-to-r from-brand-500/25 to-brand-700/25 rounded-3xl blur opacity-60 group-hover:opacity-80 transition"></div>
-              <div class="relative h-72 lg:h-96 rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-xl">
-                <iframe id="googleMap"
-                        width="100%"
-                        height="100%"
-                        style="border:0"
-                        loading="lazy"
-                        allowfullscreen
-                        referrerpolicy="no-referrer-when-downgrade"
-                        src="https://www.google.com/maps?q=Praha+1+Na+Příkopě+15&output=embed"></iframe>
-              </div>
-            </div>
-
-            <!-- INFO PANEL – glass card -->
-            <div class="mt-6 lg:mt-0 p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200 shadow-xl space-y-6">
-              <div>
-                <div class="text-xs uppercase tracking-wider text-slate-500">Vybraná lokalita</div>
-                <div id="selectedAddress" class="text-xl font-black mt-1">Praha 1, Na Příkopě 15</div>
-              </div>
-
-              <div class="flex flex-wrap gap-2 text-xs">
-                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-medium">Rejstříkově vhodná</span>
-                <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-medium">Označení schránky</span>
-                <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-medium">Souhlas vlastníka</span>
-              </div>
-
-              <div class="flex flex-col sm:flex-row gap-3">
-                <a id="openMapsLink" target="_blank" rel="noopener"
-                   class="flex-1 text-center px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-medium">
-                  Otevřít v Mapách
-                </a>
-                <a id="streetViewLink" target="_blank" rel="noopener"
-                   class="flex-1 text-center px-4 py-3 rounded-2xl bg-slate-900 text-white hover:opacity-90 font-medium">
-                  Street View
-                </a>
-              </div>
-
-              <div class="text-sm text-slate-600">
-                Moderní reprezentativní adresa vhodná pro obchodní rejstřík i image firmy.
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="sm:col-span-2">
-          <label class="block text-sm text-slate-600">Poznámka</label>
-          <textarea rows="4" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Napište, co přesně potřebujete…"></textarea>
-        </div>
-
-        <div class="sm:col-span-2 flex items-start gap-2 text-sm">
-          <input id="gdpr" type="checkbox" required class="mt-1 rounded border-slate-300 text-brand-600 focus:ring-brand-600" />
-          <label for="gdpr">Souhlasím se zpracováním osobních údajů pro účely poptávky.</label>
-        </div>
-
-        <div class="sm:col-span-2">
-          <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700">Odeslat poptávku</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
-
-    <!-- skrytá hodnota pro JS -->
-    <input type="hidden" id="lokalitaSelect" value="Praha 1, Na Příkopě 15">
-  </div>
-</div>
-
-          <!-- Mapa + info (na desktopu vedle sebe) -->
-          <div class="sm:col-span-2">
-            <div class="mt-6 grid lg:grid-cols-2 lg:gap-8 items-stretch">
-              
-              <!-- MAPA – modern tech styl -->
-              <div class="relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-brand-500/25 to-brand-700/25 rounded-3xl blur opacity-60 group-hover:opacity-80 transition"></div>
-                <div class="relative h-72 lg:h-96 rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-xl">
-                  <iframe id="googleMap"
-                          width="100%"
-                          height="100%"
-                          style="border:0"
-                          loading="lazy"
-                          allowfullscreen
-                          referrerpolicy="no-referrer-when-downgrade"
-                          src="https://www.google.com/maps?q=Praha+1+Na+Příkopě+15&output=embed"></iframe>
-                </div>
-              </div>
-
-              <!-- INFO PANEL – glass card -->
-              <div class="mt-6 lg:mt-0 p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200 shadow-xl space-y-6">
-                <div>
-                  <div class="text-xs uppercase tracking-wider text-slate-500">Vybraná lokalita</div>
-                  <div id="selectedAddress" class="text-xl font-black mt-1">Praha 1, Na Příkopě 15</div>
-                </div>
-
-                <div class="flex flex-wrap gap-2 text-xs">
-                  <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-medium">Rejstříkově vhodná</span>
-                  <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-medium">Označení schránky</span>
-                  <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-medium">Souhlas vlastníka</span>
-                </div>
-
-                <div class="flex flex-col sm:flex-row gap-3">
-                  <a id="openMapsLink" target="_blank" rel="noopener"
-                     class="flex-1 text-center px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-medium">
-                    Otevřít v Mapách
-                  </a>
-                  <a id="streetViewLink" target="_blank" rel="noopener"
-                     class="flex-1 text-center px-4 py-3 rounded-2xl bg-slate-900 text-white hover:opacity-90 font-medium">
-                    Street View
-                  </a>
-                </div>
-
-                <div class="text-sm text-slate-600">
-                  Moderní reprezentativní adresa vhodná pro obchodní rejstřík i image firmy.
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <div class="sm:col-span-2">
-            <label class="block text-sm text-slate-600">Poznámka</label>
-            <textarea rows="4" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Napište, co přesně potřebujete…"></textarea>
-          </div>
-          <div class="sm:col-span-2 flex items-start gap-2 text-sm">
-            <input id="gdpr" type="checkbox" required class="mt-1 rounded border-slate-300 text-brand-600 focus:ring-brand-600" />
-            <label for="gdpr">Souhlasím se zpracováním osobních údajů pro účely poptávky.</label>
-          </div>
-          <div class="sm:col-span-2">
-            <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700">Odeslat poptávku</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h2 class="text-2xl sm:text-3xl font-black">Časté dotazy</h2>
-      <div class="mt-6 grid md:grid-cols-2 gap-6">
-        <details class="p-5 rounded-2xl border bg-slate-50">
-          <summary class="font-semibold cursor-pointer">Je virtuální adresa legální pro obchodní rejstřík?</summary>
-          <p class="mt-2 text-slate-700">Ano, poskytujeme oficiální souhlas vlastníka a označení sídla dle zákona. Adresy jsou vhodné pro zápis do OR i pro ŽÚ.</p>
-        </details>
-        <details class="p-5 rounded-2xl border bg-slate-50">
-          <summary class="font-semibold cursor-pointer">Jak rychle vše zřídíte?</summary>
-          <p class="mt-2 text-slate-700">Standardně do 24 hodin od dodání potřebných údajů a podpisu smlouvy online.</p>
-        </details>
-        <details class="p-5 rounded-2xl border bg-slate-50">
-          <summary class="font-semibold cursor-pointer">Jak funguje přebírání a skenování pošty?</summary>
-          <p class="mt-2 text-slate-700">Po přijetí zásilky zašleme notifikaci, na požádání provedeme sken do PDF a můžeme zásilku přeposlat.</p>
-        </details>
-        <details class="p-5 rounded-2xl border bg-slate-50">
-          <summary class="font-semibold cursor-pointer">Mohu mít adresu v Praze a podnikat jinde?</summary>
-          <p class="mt-2 text-slate-700">Ano, virtuální adresa je vhodná pro image i administrativu, provozovnu můžete mít kdekoliv.</p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- Kontakt -->
-  <section id="kontakt" class="py-16">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid lg:grid-cols-3 gap-6">
-        <div class="p-6 rounded-3xl border bg-white shadow-soft lg:col-span-2">
-          <h2 class="text-2xl sm:text-3xl font-black">Kontakt</h2>
-          <div class="mt-4 grid sm:grid-cols-2 gap-4 text-slate-700">
-            <div>
-              <div class="text-sm text-slate-500">E‑mail</div>
-              <a href="mailto:info@adresao.cz" class="font-medium">info@adresao.cz</a>
-            </div>
-            <div>
-              <div class="text-sm text-slate-500">Telefon</div>
-              <a href="tel:+420777000000" class="font-medium">+420 000 000 000</a>
-            </div>
-            <div>
-              <div class="text-sm text-slate-500">Fakturační údaje</div>
-              <div class="font-medium">Adresao IČO</div>
-            </div>
-            <div>
-              <div class="text-sm text-slate-500">Klientská zóna</div>
-              <a href="prihlaseni.html" class="font-medium">Přihlásit</a>
-            </div>
-          </div>
-        </div>
-        <div class="p-6 rounded-3xl border bg-white shadow-soft">
-          <h3 class="font-bold">Propojení AO ekosystému</h3>
-          <ul class="mt-2 text-slate-700 space-y-2 text-sm">
-            <li> • StartAO.cz – logo, web, doména</li>
-            <li> • Firmao.cz – registrace firmy</li>
-            <li> • DomenAO.cz – katalog domén</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer class="border-t bg-white relative overflow-hidden">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 grid grid-cols-2 md:grid-cols-4 gap-6 text-sm">
-      <div class="col-span-2 md:col-span-1">
-        <div class="flex items-center gap-3">
-          <img src="logo.svg" alt="Adresao.cz logo" class="w-9 h-9 rounded-xl shadow-soft" />
-          <div class="font-black text-lg">Adresao<span class="text-brand-600">.cz</span></div>
-        </div>
-        <p class="mt-2 text-slate-600">Virtuální adresa, sídlo firmy a profesionální správa pošty v celé ČR.</p>
-      </div>
-      <div>
-        <div class="font-semibold">Služby</div>
-        <ul class="mt-2 space-y-1 text-slate-600">
-          <li><a href="#sluzby" class="hover:text-brand-700">Virtuální sídlo</a></li>
-          <li><a href="#sluzby" class="hover:text-brand-700">Sken a přeposílání pošty</a></li>
-          <li><a href="#sluzby" class="hover:text-brand-700">Kanceláře a zasedačky</a></li>
-        </ul>
-      </div>
-      <div>
-        <div class="font-semibold">Důležité</div>
-        <ul class="mt-2 space-y-1 text-slate-600">
-                    <li><a href="obchodni-podminky.html" class="hover:text-brand-700">Obchodní podmínky</a></li>
-          <li><a href="gdpr.html" class="hover:text-brand-700">GDPR</a></li>
-          
-          <li><a href="lokality.html" class="hover:text-brand-700">Lokality</a></li>
-        </ul>
-      </div>
-      <div class="col-span-2 md:col-span-1">
-        <div class="font-semibold">Kontakt</div>
-        <ul class="mt-2 space-y-1 text-slate-600">
-          <li><a href="mailto:info@adresao.cz" class="hover:text-brand-700">info@adresao.cz</a></li>
-          <li><a href="tel:+420777000000" class="hover:text-brand-700">+420 000 000 000</a></li>
-          <li><a href="prihlaseni.html" class="hover:text-brand-700">Přihlášení</a></li>
-        </ul>
-
-        </div>
-    </div>
-    <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-xs text-slate-500 pb-8">
-      <div>© <span id="year"></span> Adresao.cz • Všechna práva vyhrazena.</div>
-      <div class="flex items-center gap-3">
-        <a href="https://www.facebook.com/adresao" target="_blank" rel="noopener" aria-label="Facebook" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white hover:bg-brand-50 hover:border-brand-300 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" class="text-slate-600 hover:text-brand-700"><path d="M22 12a10 10 0 1 0-11.5 9.9v-7H8v-3h2.5V9.5c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.3c-1.3 0-1.7.8-1.7 1.6V12H17l-.4 3h-2.7v7A10 10 0 0 0 22 12z"/></svg>
-        </a>
-        <a href="https://www.instagram.com/adresao" target="_blank" rel="noopener" aria-label="Instagram" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white hover:bg-brand-50 hover:border-brand-300 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" class="text-slate-600 hover:text-brand-700"><path d="M7 2C4.2 2 2 4.2 2 7v10c0 2.8 2.2 5 5 5h10c2.8 0 5-2.2 5-5V7c0-2.8-2.2-5-5-5H7zm5 5.2A4.8 4.8 0 1 1 7.2 12 4.8 4.8 0 0 1 12 7.2zm6-1.3a1.2 1.2 0 1 1-1.2 1.2A1.2 1.2 0 0 1 18 5.9z"/></svg>
-        </a>
-        <a href="https://www.youtube.com/@adresao" target="_blank" rel="noopener" aria-label="YouTube" class="w-8 h-8 flex items-center justify-center rounded-lg border border-slate-200 bg-white hover:bg-brand-50 hover:border-brand-300 transition">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 24 24" class="text-slate-600 hover:text-brand-700"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.7 3.5 12 3.5 12 3.5s-7.7 0-9.4.6A3 3 0 0 0 .5 6.2 31.7 31.7 0 0 0 0 12a31.7 31.7 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.7.6 9.4.6 9.4.6s7.7 0 9.4-.6a3 3 0 0 0 2.1-2.1A31.7 31.7 0 0 0 24 12a31.7 31.7 0 0 0-.5-5.8zM9.8 15.5v-7l6.2 3.5-6.2 3.5z"/></svg>
-        </a>
-      </div>
-    </div>
-      <!-- Silueta České republiky – externí asset --> <img src="cz-outline.png" alt="Obrys České republiky" class="absolute bottom-0 right-0 w-80 md:w-[560px] opacity-10 text-brand-600 pointer-events-none" /> </footer>
-
-<script>
-  // Custom select
-  const wrap = document.getElementById('customSelectWrap');
-  const btnSelect = document.getElementById('customSelectBtn');
-  const menu = document.getElementById('customSelectMenu');
-  const value = document.getElementById('customSelectValue');
-  const arrow = document.getElementById('customSelectArrow');
-  const options = document.querySelectorAll('.custom-option');
-  const hiddenInput = document.getElementById('lokalitaSelect');
-
-  // Mobile menu toggle
-  const btn = document.getElementById('menuBtn');
-  const nav = document.getElementById('mobileNav');
-
-  btn?.addEventListener('click', () => {
-    nav.classList.toggle('hidden');
-    btn.setAttribute('aria-expanded', String(!nav.classList.contains('hidden')));
-  });
-
-  nav?.querySelectorAll('a').forEach((link) => {
-    link.addEventListener('click', () => {
-      nav.classList.add('hidden');
-      btn.setAttribute('aria-expanded', 'false');
-    });
-  });
-
-  // Dynamic year
-  document.getElementById('year').textContent = new Date().getFullYear();
-
-  // Google mapa podle vybrané lokality + odkazy
-  const mapFrame = document.getElementById('googleMap');
-  const selectedAddressEl = document.getElementById('selectedAddress');
-  const openMapsLink = document.getElementById('openMapsLink');
-  const streetViewLink = document.getElementById('streetViewLink');
-
-  function updateMap(addressRaw) {
-    const address = encodeURIComponent(addressRaw);
-    if (mapFrame) mapFrame.src = `https://www.google.com/maps?q=${address}&output=embed`;
-    if (selectedAddressEl) selectedAddressEl.textContent = addressRaw;
-    if (openMapsLink) openMapsLink.href = `https://www.google.com/maps/search/?api=1&query=${address}`;
-    if (streetViewLink) streetViewLink.href = `https://www.google.com/maps?layer=c&q=${address}`;
-  }
-
-  if (hiddenInput?.value) updateMap(hiddenInput.value);
-
-  btnSelect?.addEventListener('click', () => {
-    menu.classList.toggle('hidden');
-    arrow.classList.toggle('rotate-180');
-  });
-
-  options.forEach((opt) => {
-    opt.addEventListener('click', () => {
-      value.textContent = opt.dataset.value;
-      hiddenInput.value = opt.dataset.address;
-      menu.classList.add('hidden');
-      arrow.classList.remove('rotate-180');
-      updateMap(opt.dataset.address);
-    });
-  });
-
-  document.addEventListener('click', (e) => {
-    if (wrap && !wrap.contains(e.target)) {
-      menu.classList.add('hidden');
-      arrow.classList.remove('rotate-180');
-    }
-  });
-
-  // Vyhledávač lokalit
-  const lokSearch = document.getElementById('lokalitySearch');
-  const lokClear = document.getElementById('lokalityClear');
-  const lokCards = Array.from(document.querySelectorAll('.lokalita-card'));
-  const lokVisible = document.getElementById('lokalityVisible');
-  const lokTotal = document.getElementById('lokalityTotal');
-  const lokEmpty = document.getElementById('lokalityEmpty');
-
-  function normalizeStr(s) {
-    return (s || '')
-      .toLowerCase()
-      .normalize('NFD')
-      .replace(/[̀-ͯ]/g, '');
-  }
-
-  function applyLokalityFilter(qRaw) {
-    const q = normalizeStr(qRaw).trim();
-    let visible = 0;
-
-    lokCards.forEach(card => {
-      const hay = normalizeStr(card.getAttribute('data-search') || card.textContent);
-      const match = q === '' || hay.includes(q);
-      card.classList.toggle('hidden', !match);
-      if (match) visible++;
     });
 
-    if (lokVisible) lokVisible.textContent = String(visible);
-    if (lokTotal) lokTotal.textContent = String(lokCards.length);
-    if (lokEmpty) lokEmpty.classList.toggle('hidden', visible !== 0);
-  }
+    const lokSearch = document.getElementById('lokalitySearch');
+    const lokClear = document.getElementById('lokalityClear');
+    const lokCards = Array.from(document.querySelectorAll('.lokalita-card'));
+    const lokVisible = document.getElementById('lokalityVisible');
+    const lokTotal = document.getElementById('lokalityTotal');
+    const lokEmpty = document.getElementById('lokalityEmpty');
 
-  applyLokalityFilter('');
+    function normalizeStr(s) {
+      return (s || '')
+        .toLowerCase()
+        .normalize('NFD')
+        .replace(/[̀-ͯ]/g, '');
+    }
 
-  lokSearch?.addEventListener('input', (e) => applyLokalityFilter(e.target.value));
+    function applyLokalityFilter(qRaw) {
+      const q = normalizeStr(qRaw).trim();
+      let visible = 0;
 
-  lokClear?.addEventListener('click', () => {
-    if (lokSearch) lokSearch.value = '';
+      lokCards.forEach(card => {
+        const hay = normalizeStr(card.getAttribute('data-search') || card.textContent);
+        const match = q === '' || hay.includes(q);
+        card.classList.toggle('hidden', !match);
+        if (match) visible++;
+      });
+
+      if (lokVisible) lokVisible.textContent = String(visible);
+      if (lokTotal) lokTotal.textContent = String(lokCards.length);
+      if (lokEmpty) lokEmpty.classList.toggle('hidden', visible !== 0);
+    }
+
     applyLokalityFilter('');
-    lokSearch?.focus();
-  });
 
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && document.activeElement === lokSearch) {
-      lokSearch.value = '';
+    lokSearch?.addEventListener('input', (e) => applyLokalityFilter(e.target.value));
+
+    lokClear?.addEventListener('click', () => {
+      if (lokSearch) lokSearch.value = '';
       applyLokalityFilter('');
-    }
-  });
-</script>
+      lokSearch?.focus();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && document.activeElement === lokSearch) {
+        lokSearch.value = '';
+        applyLokalityFilter('');
+      }
+    });
+  </script>
 </body>
 </html>
-
