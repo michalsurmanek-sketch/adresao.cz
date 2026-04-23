@@ -1048,60 +1048,186 @@
   </section>
 
   <!-- Nezávazná poptávka -->
-  <section id="objednat" class="py-16">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="p-6 sm:p-8 rounded-3xl border bg-white shadow-soft">
-        <h2 class="text-2xl sm:text-3xl font-black">Nezávazná poptávka</h2>
-        <p class="mt-1 text-slate-600">Vyplňte pár údajů a ozveme se do 24 hodin.</p>
-        <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4" onsubmit="event.preventDefault(); window.location.href='dekuji.html';">
-          <div>
-            <label class="block text-sm text-slate-600">Jméno a příjmení</label>
-            <input type="text" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Jan Novák" />
+<section id="objednat" class="py-16">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="p-6 sm:p-8 rounded-3xl border bg-white shadow-soft">
+      <h2 class="text-2xl sm:text-3xl font-black">Nezávazná poptávka</h2>
+      <p class="mt-1 text-slate-600">Vyplňte pár údajů a ozveme se do 24 hodin.</p>
+
+      <form class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4" onsubmit="event.preventDefault(); window.location.href='dekuji.html';">
+        <div>
+          <label class="block text-sm text-slate-600">Jméno a příjmení</label>
+          <input type="text" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Jan Novák" />
+        </div>
+
+        <div>
+          <label class="block text-sm text-slate-600">E-mail</label>
+          <input type="email" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="jan@firma.cz" />
+        </div>
+
+        <div>
+          <label class="block text-sm text-slate-600">Telefon</label>
+          <input type="tel" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="+420 777 000 000" />
+        </div>
+
+        <div>
+          <label class="block text-sm text-slate-600 mb-2">Preferovaná lokalita</label>
+
+          <div class="relative" id="customSelectWrap">
+            <button
+              type="button"
+              id="customSelectBtn"
+              class="w-full h-12 flex items-center justify-between rounded-2xl border border-slate-300 bg-white px-4 text-left text-slate-900 shadow-sm transition hover:border-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100 focus:outline-none"
+            >
+              <span id="customSelectValue">Praha 1</span>
+
+              <svg
+                id="customSelectArrow"
+                xmlns="http://www.w3.org/2000/svg"
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="text-slate-400 transition"
+              >
+                <path d="m6 9 6 6 6-6"></path>
+              </svg>
+            </button>
+
+            <div
+              id="customSelectMenu"
+              class="absolute left-0 right-0 top-[calc(100%+10px)] z-30 hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl"
+            >
+              <button
+                type="button"
+                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+                data-value="Praha 1"
+                data-address="Praha 1, Na Příkopě 15"
+              >
+                Praha 1
+              </button>
+
+              <button
+                type="button"
+                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+                data-value="Brno-střed"
+                data-address="Brno-střed, Masarykova 3"
+              >
+                Brno-střed
+              </button>
+
+              <button
+                type="button"
+                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+                data-value="Ostrava"
+                data-address="Ostrava, Nádražní 28"
+              >
+                Ostrava
+              </button>
+
+              <button
+                type="button"
+                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+                data-value="Plzeň"
+                data-address="Plzeň, Americká 15"
+              >
+                Plzeň
+              </button>
+
+              <button
+                type="button"
+                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+                data-value="Zlín"
+                data-address="Zlín, tř. T. Bati 123"
+              >
+                Zlín
+              </button>
+
+              <button
+                type="button"
+                class="custom-option w-full rounded-xl px-4 py-3 text-left hover:bg-brand-50"
+                data-value="Liberec"
+                data-address="Liberec, Pražská 12"
+              >
+                Liberec
+              </button>
+            </div>
+
+            <input type="hidden" id="lokalitaSelect" value="Praha 1, Na Příkopě 15">
           </div>
-          <div>
-            <label class="block text-sm text-slate-600">E‑mail</label>
-            <input type="email" required class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="jan@firma.cz" />
+        </div>
+
+        <!-- Mapa + info (na desktopu vedle sebe) -->
+        <div class="sm:col-span-2">
+          <div class="mt-6 grid lg:grid-cols-2 lg:gap-8 items-stretch">
+            
+            <!-- MAPA – modern tech styl -->
+            <div class="relative group">
+              <div class="absolute -inset-1 bg-gradient-to-r from-brand-500/25 to-brand-700/25 rounded-3xl blur opacity-60 group-hover:opacity-80 transition"></div>
+              <div class="relative h-72 lg:h-96 rounded-3xl overflow-hidden border border-slate-200 bg-white shadow-xl">
+                <iframe id="googleMap"
+                        width="100%"
+                        height="100%"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q=Praha+1+Na+Příkopě+15&output=embed"></iframe>
+              </div>
+            </div>
+
+            <!-- INFO PANEL – glass card -->
+            <div class="mt-6 lg:mt-0 p-6 rounded-3xl bg-white/80 backdrop-blur-xl border border-slate-200 shadow-xl space-y-6">
+              <div>
+                <div class="text-xs uppercase tracking-wider text-slate-500">Vybraná lokalita</div>
+                <div id="selectedAddress" class="text-xl font-black mt-1">Praha 1, Na Příkopě 15</div>
+              </div>
+
+              <div class="flex flex-wrap gap-2 text-xs">
+                <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 font-medium">Rejstříkově vhodná</span>
+                <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-medium">Označení schránky</span>
+                <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700 font-medium">Souhlas vlastníka</span>
+              </div>
+
+              <div class="flex flex-col sm:flex-row gap-3">
+                <a id="openMapsLink" target="_blank" rel="noopener"
+                   class="flex-1 text-center px-4 py-3 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 font-medium">
+                  Otevřít v Mapách
+                </a>
+                <a id="streetViewLink" target="_blank" rel="noopener"
+                   class="flex-1 text-center px-4 py-3 rounded-2xl bg-slate-900 text-white hover:opacity-90 font-medium">
+                  Street View
+                </a>
+              </div>
+
+              <div class="text-sm text-slate-600">
+                Moderní reprezentativní adresa vhodná pro obchodní rejstřík i image firmy.
+              </div>
+            </div>
           </div>
-          <div>
-            <label class="block text-sm text-slate-600">Telefon</label>
-            <input type="tel" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="+420 777 000 000" />
-          </div>
-          <div>
-  <label class="block text-sm text-slate-600 mb-2">Preferovaná lokalita</label>
+        </div>
 
-  <div class="relative" id="customSelectWrap">
-    <button type="button" id="customSelectBtn"
-      class="w-full flex items-center justify-between rounded-2xl border border-slate-300 bg-white px-4 py-4 text-left text-slate-900 shadow-sm transition hover:border-slate-400 focus:border-brand-600 focus:ring-4 focus:ring-brand-100 focus:outline-none">
-      <span id="customSelectValue">Praha 1</span>
-      <svg id="customSelectArrow" xmlns="http://www.w3.org/2000/svg" width="18" height="18"
-        viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
-        stroke-linecap="round" stroke-linejoin="round"
-        class="text-slate-400 transition">
-        <path d="m6 9 6 6 6-6"/>
-      </svg>
-    </button>
+        <div class="sm:col-span-2">
+          <label class="block text-sm text-slate-600">Poznámka</label>
+          <textarea rows="4" class="mt-1 w-full rounded-xl border-slate-300 focus:border-brand-600 focus:ring-brand-600" placeholder="Napište, co přesně potřebujete…"></textarea>
+        </div>
 
-    <div id="customSelectMenu"
-      class="absolute left-0 right-0 top-[calc(100%+10px)] z-30 hidden rounded-2xl border border-slate-200 bg-white p-2 shadow-2xl">
+        <div class="sm:col-span-2 flex items-start gap-2 text-sm">
+          <input id="gdpr" type="checkbox" required class="mt-1 rounded border-slate-300 text-brand-600 focus:ring-brand-600" />
+          <label for="gdpr">Souhlasím se zpracováním osobních údajů pro účely poptávky.</label>
+        </div>
 
-      <button type="button" class="custom-option w-full rounded-xl px-4 py-4 text-left hover:bg-brand-50"
-        data-value="Praha 1" data-address="Praha 1, Na Příkopě 15">Praha 1</button>
-
-      <button type="button" class="custom-option w-full rounded-xl px-4 py-4 text-left hover:bg-brand-50"
-        data-value="Brno-střed" data-address="Brno-střed, Masarykova 3">Brno-střed</button>
-
-      <button type="button" class="custom-option w-full rounded-xl px-4 py-4 text-left hover:bg-brand-50"
-        data-value="Ostrava" data-address="Ostrava, Nádražní 28">Ostrava</button>
-
-      <button type="button" class="custom-option w-full rounded-xl px-4 py-4 text-left hover:bg-brand-50"
-        data-value="Plzeň" data-address="Plzeň, Americká 15">Plzeň</button>
-
-      <button type="button" class="custom-option w-full rounded-xl px-4 py-4 text-left hover:bg-brand-50"
-        data-value="Zlín" data-address="Zlín, tř. T. Bati 123">Zlín</button>
-
-      <button type="button" class="custom-option w-full rounded-xl px-4 py-4 text-left hover:bg-brand-50"
-        data-value="Liberec" data-address="Liberec, Pražská 12">Liberec</button>
+        <div class="sm:col-span-2">
+          <button type="submit" class="w-full sm:w-auto px-6 py-3 rounded-2xl bg-brand-600 text-white font-medium hover:bg-brand-700">Odeslat poptávku</button>
+        </div>
+      </form>
     </div>
+  </div>
+</section>
 
     <!-- skrytá hodnota pro JS -->
     <input type="hidden" id="lokalitaSelect" value="Praha 1, Na Příkopě 15">
@@ -1289,188 +1415,121 @@
     </div>
       <!-- Silueta České republiky – externí asset --> <img src="cz-outline.png" alt="Obrys České republiky" class="absolute bottom-0 right-0 w-80 md:w-[560px] opacity-10 text-brand-600 pointer-events-none" /> </footer>
 
-  <script>
-    // Mobile menu toggle
-const btn = document.getElementById('menuBtn');
-const nav = document.getElementById('mobileNav');
+<script>
+  // Custom select
+  const wrap = document.getElementById('customSelectWrap');
+  const btnSelect = document.getElementById('customSelectBtn');
+  const menu = document.getElementById('customSelectMenu');
+  const value = document.getElementById('customSelectValue');
+  const arrow = document.getElementById('customSelectArrow');
+  const options = document.querySelectorAll('.custom-option');
+  const hiddenInput = document.getElementById('lokalitaSelect');
 
-btn?.addEventListener('click', () => {
-  nav.classList.toggle('hidden');
-  btn.setAttribute('aria-expanded', String(!nav.classList.contains('hidden')));
-});
+  // Mobile menu toggle
+  const btn = document.getElementById('menuBtn');
+  const nav = document.getElementById('mobileNav');
 
-// 🔥 TOTO TI CHYBĚLO – zavření po kliknutí na odkaz
-nav?.querySelectorAll('a').forEach((link) => {
-  link.addEventListener('click', () => {
-    nav.classList.add('hidden');
-    btn.setAttribute('aria-expanded', 'false');
+  btn?.addEventListener('click', () => {
+    nav.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!nav.classList.contains('hidden')));
   });
-});
 
-    // Dynamic year
-    document.getElementById('year').textContent = new Date().getFullYear();
+  nav?.querySelectorAll('a').forEach((link) => {
+    link.addEventListener('click', () => {
+      nav.classList.add('hidden');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
 
-    // Google mapa podle vybrané lokality + odkazy pro důvěryhodnost
-    const select = document.getElementById('lokalitaSelect');
-    const mapFrame = document.getElementById('googleMap');
-    const selectedAddressEl = document.getElementById('selectedAddress');
-    const openMapsLink = document.getElementById('openMapsLink');
-    const streetViewLink = document.getElementById('streetViewLink');
+  // Dynamic year
+  document.getElementById('year').textContent = new Date().getFullYear();
 
-    function updateMap(addressRaw) {
-      const address = encodeURIComponent(addressRaw);
-      if (mapFrame) mapFrame.src = `https://www.google.com/maps?q=${address}&output=embed`;
-      if (selectedAddressEl) selectedAddressEl.textContent = addressRaw;
+  // Google mapa podle vybrané lokality + odkazy
+  const mapFrame = document.getElementById('googleMap');
+  const selectedAddressEl = document.getElementById('selectedAddress');
+  const openMapsLink = document.getElementById('openMapsLink');
+  const streetViewLink = document.getElementById('streetViewLink');
 
-      // Otevření v Google Maps
-      if (openMapsLink) openMapsLink.href = `https://www.google.com/maps/search/?api=1&query=${address}`;
+  function updateMap(addressRaw) {
+    const address = encodeURIComponent(addressRaw);
+    if (mapFrame) mapFrame.src = `https://www.google.com/maps?q=${address}&output=embed`;
+    if (selectedAddressEl) selectedAddressEl.textContent = addressRaw;
+    if (openMapsLink) openMapsLink.href = `https://www.google.com/maps/search/?api=1&query=${address}`;
+    if (streetViewLink) streetViewLink.href = `https://www.google.com/maps?layer=c&q=${address}`;
+  }
 
-      // Street View (přímý odkaz na lokaci; Google si režim dopne podle dostupnosti)
-      if (streetViewLink) streetViewLink.href = `https://www.google.com/maps?layer=c&q=${address}`;
+  if (hiddenInput?.value) updateMap(hiddenInput.value);
+
+  btnSelect?.addEventListener('click', () => {
+    menu.classList.toggle('hidden');
+    arrow.classList.toggle('rotate-180');
+  });
+
+  options.forEach((opt) => {
+    opt.addEventListener('click', () => {
+      value.textContent = opt.dataset.value;
+      hiddenInput.value = opt.dataset.address;
+      menu.classList.add('hidden');
+      arrow.classList.remove('rotate-180');
+      updateMap(opt.dataset.address);
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (wrap && !wrap.contains(e.target)) {
+      menu.classList.add('hidden');
+      arrow.classList.remove('rotate-180');
     }
+  });
 
-    // Init
-    if (select?.value) updateMap(select.value);
+  // Vyhledávač lokalit
+  const lokSearch = document.getElementById('lokalitySearch');
+  const lokClear = document.getElementById('lokalityClear');
+  const lokCards = Array.from(document.querySelectorAll('.lokalita-card'));
+  const lokVisible = document.getElementById('lokalityVisible');
+  const lokTotal = document.getElementById('lokalityTotal');
+  const lokEmpty = document.getElementById('lokalityEmpty');
 
-    // Change
-    select?.addEventListener('change', function() {
-      updateMap(this.value);
+  function normalizeStr(s) {
+    return (s || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '');
+  }
+
+  function applyLokalityFilter(qRaw) {
+    const q = normalizeStr(qRaw).trim();
+    let visible = 0;
+
+    lokCards.forEach(card => {
+      const hay = normalizeStr(card.getAttribute('data-search') || card.textContent);
+      const match = q === '' || hay.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) visible++;
     });
 
-    // Vyhledávač lokalit (škáluje na 100+ míst)
-    const lokSearch = document.getElementById('lokalitySearch');
-    const lokClear = document.getElementById('lokalityClear');
-    const lokCards = Array.from(document.querySelectorAll('.lokalita-card'));
-    const lokVisible = document.getElementById('lokalityVisible');
-    const lokTotal = document.getElementById('lokalityTotal');
-    const lokEmpty = document.getElementById('lokalityEmpty');
+    if (lokVisible) lokVisible.textContent = String(visible);
+    if (lokTotal) lokTotal.textContent = String(lokCards.length);
+    if (lokEmpty) lokEmpty.classList.toggle('hidden', visible !== 0);
+  }
 
-    function normalizeStr(s) {
-      return (s || '')
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[̀-ͯ]/g, '');
-    }
+  applyLokalityFilter('');
 
-    function applyLokalityFilter(qRaw) {
-      const q = normalizeStr(qRaw).trim();
-      let visible = 0;
+  lokSearch?.addEventListener('input', (e) => applyLokalityFilter(e.target.value));
 
-      lokCards.forEach(card => {
-        const hay = normalizeStr(card.getAttribute('data-search') || card.textContent);
-        const match = q === '' || hay.includes(q);
-        card.classList.toggle('hidden', !match);
-        if (match) visible++;
-      });
-
-      if (lokVisible) lokVisible.textContent = String(visible);
-      if (lokTotal) lokTotal.textContent = String(lokCards.length);
-      if (lokEmpty) lokEmpty.classList.toggle('hidden', visible !== 0);
-    }
-
-    // Init
+  lokClear?.addEventListener('click', () => {
+    if (lokSearch) lokSearch.value = '';
     applyLokalityFilter('');
+    lokSearch?.focus();
+  });
 
-    lokSearch?.addEventListener('input', (e) => applyLokalityFilter(e.target.value));
-
-    lokClear?.addEventListener('click', () => {
-      if (lokSearch) lokSearch.value = '';
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && document.activeElement === lokSearch) {
+      lokSearch.value = '';
       applyLokalityFilter('');
-      lokSearch?.focus();
-    });
-
-    // ESC = clear
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && document.activeElement === lokSearch) {
-        lokSearch.value = '';
-        applyLokalityFilter('');
-      }
-    });
-  </script>
-</body>
-</html>
-
-
-    // Dynamic year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // Google mapa podle vybrané lokality + odkazy pro důvěryhodnost
-    const select = document.getElementById('lokalitaSelect');
-    const mapFrame = document.getElementById('googleMap');
-    const selectedAddressEl = document.getElementById('selectedAddress');
-    const openMapsLink = document.getElementById('openMapsLink');
-    const streetViewLink = document.getElementById('streetViewLink');
-
-    function updateMap(addressRaw) {
-      const address = encodeURIComponent(addressRaw);
-      if (mapFrame) mapFrame.src = `https://www.google.com/maps?q=${address}&output=embed`;
-      if (selectedAddressEl) selectedAddressEl.textContent = addressRaw;
-
-      // Otevření v Google Maps
-      if (openMapsLink) openMapsLink.href = `https://www.google.com/maps/search/?api=1&query=${address}`;
-
-      // Street View (přímý odkaz na lokaci; Google si režim dopne podle dostupnosti)
-      if (streetViewLink) streetViewLink.href = `https://www.google.com/maps?layer=c&q=${address}`;
     }
-
-    // Init
-    if (select?.value) updateMap(select.value);
-
-    // Change
-    select?.addEventListener('change', function() {
-      updateMap(this.value);
-    });
-
-    // Vyhledávač lokalit (škáluje na 100+ míst)
-    const lokSearch = document.getElementById('lokalitySearch');
-    const lokClear = document.getElementById('lokalityClear');
-    const lokCards = Array.from(document.querySelectorAll('.lokalita-card'));
-    const lokVisible = document.getElementById('lokalityVisible');
-    const lokTotal = document.getElementById('lokalityTotal');
-    const lokEmpty = document.getElementById('lokalityEmpty');
-
-    function normalizeStr(s) {
-      return (s || '')
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[̀-ͯ]/g, '');
-    }
-
-    function applyLokalityFilter(qRaw) {
-      const q = normalizeStr(qRaw).trim();
-      let visible = 0;
-
-      lokCards.forEach(card => {
-        const hay = normalizeStr(card.getAttribute('data-search') || card.textContent);
-        const match = q === '' || hay.includes(q);
-        card.classList.toggle('hidden', !match);
-        if (match) visible++;
-      });
-
-      if (lokVisible) lokVisible.textContent = String(visible);
-      if (lokTotal) lokTotal.textContent = String(lokCards.length);
-      if (lokEmpty) lokEmpty.classList.toggle('hidden', visible !== 0);
-    }
-
-    // Init
-    applyLokalityFilter('');
-
-    lokSearch?.addEventListener('input', (e) => applyLokalityFilter(e.target.value));
-
-    lokClear?.addEventListener('click', () => {
-      if (lokSearch) lokSearch.value = '';
-      applyLokalityFilter('');
-      lokSearch?.focus();
-    });
-
-    // ESC = clear
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && document.activeElement === lokSearch) {
-        lokSearch.value = '';
-        applyLokalityFilter('');
-      }
-    });
-  </script>
+  });
+</script>
 </body>
 </html>
 
